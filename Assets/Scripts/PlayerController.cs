@@ -13,6 +13,10 @@ public class PlayerController : MonoBehaviour
     private bool canInteract = false;
     private InteractableWorldItem nearbyItem;
 
+    // Variabel untuk mengecek area selanjutnya
+    private bool canEnterNextArea = false;
+    private NextAreaController nearbyNextArea;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -38,15 +42,22 @@ public class PlayerController : MonoBehaviour
                 jumpPressed = true;
                 
             // Cek interaksi dengan tombol E
-            if (canInteract && Keyboard.current.eKey.wasPressedThisFrame && nearbyItem != null)
+            if (Keyboard.current.eKey.wasPressedThisFrame)
             {
-                InventoryController invController = FindObjectOfType<InventoryController>();
-                if (invController != null)
+                if (canInteract && nearbyItem != null)
                 {
-                    invController.ReceiveWorldItem(nearbyItem);
-                    nearbyItem.HideWorldItem(); // Sembunyikan SATU KESATUAN item dari dunia
-                    nearbyItem = null;
-                    canInteract = false;
+                    InventoryController invController = FindObjectOfType<InventoryController>();
+                    if (invController != null)
+                    {
+                        invController.ReceiveWorldItem(nearbyItem);
+                        nearbyItem.HideWorldItem(); // Sembunyikan SATU KESATUAN item dari dunia
+                        nearbyItem = null;
+                        canInteract = false;
+                    }
+                }
+                else if (canEnterNextArea && nearbyNextArea != null)
+                {
+                    nearbyNextArea.GoToNextLevel();
                 }
             }
         }
@@ -73,6 +84,15 @@ public class PlayerController : MonoBehaviour
                 nearbyItem.TogglePrompt(true);
             }
         }
+        else if (collision.CompareTag("NextArea"))
+        {
+            canEnterNextArea = true;
+            nearbyNextArea = collision.GetComponent<NextAreaController>();
+            if (nearbyNextArea != null)
+            {
+                nearbyNextArea.TogglePrompt(true);
+            }
+        }
     }
 
     // Mendeteksi saat player menjauhi objek interaktif
@@ -85,6 +105,15 @@ public class PlayerController : MonoBehaviour
                 nearbyItem.TogglePrompt(false);
                 nearbyItem = null;
                 canInteract = false;
+            }
+        }
+        else if (collision.CompareTag("NextArea"))
+        {
+            if (nearbyNextArea != null && nearbyNextArea.gameObject == collision.gameObject)
+            {
+                nearbyNextArea.TogglePrompt(false);
+                nearbyNextArea = null;
+                canEnterNextArea = false;
             }
         }
     }
