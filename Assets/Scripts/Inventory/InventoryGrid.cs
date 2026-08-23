@@ -40,7 +40,14 @@ public class InventoryGrid : MonoBehaviour
 
     private void CreateVisualGrid()
     {
-        if (!showVisualGrid) return;
+        // Cegah duplikasi visual grid & background
+        Transform existingBg = rectTransform.Find("InventoryBackground");
+        if (existingBg != null) Destroy(existingBg.gameObject);
+
+        Transform existingContainer = rectTransform.Find("VisualGridContainer");
+        if (existingContainer != null) Destroy(existingContainer.gameObject);
+
+        // Tambahkan Background jika sprite di-assign;
 
         // Buat container untuk visual grid agar tidak berantakan
         GameObject visualContainer = new GameObject("VisualGridContainer");
@@ -95,6 +102,13 @@ public class InventoryGrid : MonoBehaviour
             int x = item.onGridPositionX;
             int y = item.onGridPositionY;
             
+            // Cek overlap atau out of bounds
+            if (!IsValidPosition(x, y, item.Width, item.Height))
+            {
+                Debug.LogWarning($"Item {item.name} pada posisi ({x},{y}) menabrak item lain atau keluar batas saat RebuildGridFromChildren!");
+                continue; // Jangan dimasukkan ke gridArray agar tidak error/tumpang tindih
+            }
+
             // Masukkan kembali ke dalam array 2D
             for (int i = 0; i < item.Width; i++)
             {
@@ -116,8 +130,15 @@ public class InventoryGrid : MonoBehaviour
     {
         InitializeIfNeeded();
 
+        Camera uiCamera = null;
+        Canvas canvas = GetComponentInParent<Canvas>();
+        if (canvas != null && (canvas.renderMode == RenderMode.ScreenSpaceCamera || canvas.renderMode == RenderMode.WorldSpace))
+        {
+            uiCamera = canvas.worldCamera;
+        }
+
         // Mengubah posisi layar mouse menjadi posisi lokal relatif terhadap Grid
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, screenMousePosition, null, out Vector2 localPos);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, screenMousePosition, uiCamera, out Vector2 localPos);
         
         Vector3[] corners = new Vector3[4];
         rectTransform.GetWorldCorners(corners);
@@ -187,11 +208,27 @@ public class InventoryGrid : MonoBehaviour
     // Mengangkat item dari grid
     public void RemoveItem(InventoryItem item)
     {
+        if (item == null) return;
+        
+        int startX = item.onGridPositionX;
+        int startY = item.onGridPositionY;
+
         for (int i = 0; i < item.Width; i++)
         {
             for (int j = 0; j < item.Height; j++)
             {
-                gridArray[item.onGridPositionX + i, item.onGridPositionY + j] = null;
+                int x = startX + i;
+                int y = startY + j;
+
+                // Pastikan koordinat tidak IndexOutOfRange
+                if (x >= 0 && x < gridWidth && y >= 0 && y < gridHeight)
+                {
+                    // Hanya hapus jika referensi di grid memang item ini
+                    if (gridArray[x, y] == item)
+                    {
+                        gridArray[x, y] = null;
+                    }
+                }
             }
         }
         

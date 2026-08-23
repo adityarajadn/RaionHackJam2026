@@ -101,7 +101,11 @@ public class InventoryController : MonoBehaviour
                 foreach (Transform child in stagingArea)
                 {
                     RectTransform childRect = child as RectTransform;
-                    if (childRect != null && RectTransformUtility.RectangleContainsScreenPoint(childRect, mousePosition, null))
+                    Camera uiCamera = null;
+                    Canvas canvas = childRect.GetComponentInParent<Canvas>();
+                    if (canvas != null && (canvas.renderMode == RenderMode.ScreenSpaceCamera || canvas.renderMode == RenderMode.WorldSpace)) uiCamera = canvas.worldCamera;
+
+                    if (childRect != null && RectTransformUtility.RectangleContainsScreenPoint(childRect, mousePosition, uiCamera))
                     {
                         selectedItem = child.GetComponent<InventoryItem>();
                         selectedItemRect = childRect;
@@ -123,7 +127,11 @@ public class InventoryController : MonoBehaviour
     {
         // Posisikan item mengikuti kursor mouse (offset ke tengah)
         RectTransform canvasRect = transform as RectTransform;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, mousePosition, null, out Vector2 localMousePos);
+        Camera uiCamera = null;
+        Canvas canvas = GetComponentInParent<Canvas>();
+        if (canvas != null && (canvas.renderMode == RenderMode.ScreenSpaceCamera || canvas.renderMode == RenderMode.WorldSpace)) uiCamera = canvas.worldCamera;
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, mousePosition, uiCamera, out Vector2 localMousePos);
         selectedItemRect.localPosition = localMousePos;
 
         // Rotasi dengan menekan tombol R
@@ -162,7 +170,11 @@ public class InventoryController : MonoBehaviour
             {
                 // Jika klik di luar kotak grid, maka jatuhkan item ke dunia
                 RectTransform gridRect = selectedGrid.GetComponent<RectTransform>();
-                if (!RectTransformUtility.RectangleContainsScreenPoint(gridRect, mousePosition, null))
+                Camera gridUiCamera = null;
+                Canvas gridCanvas = gridRect.GetComponentInParent<Canvas>();
+                if (gridCanvas != null && (gridCanvas.renderMode == RenderMode.ScreenSpaceCamera || gridCanvas.renderMode == RenderMode.WorldSpace)) gridUiCamera = gridCanvas.worldCamera;
+
+                if (!RectTransformUtility.RectangleContainsScreenPoint(gridRect, mousePosition, gridUiCamera))
                 {
                     DropItemToWorld(mousePosition);
                 }
