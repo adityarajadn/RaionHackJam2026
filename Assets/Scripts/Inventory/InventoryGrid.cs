@@ -6,13 +6,18 @@ public class InventoryGrid : MonoBehaviour
     public int gridWidth = 10;
     public int gridHeight = 10;
     public const float TILE_SIZE = 50f;
+    public float spacing = 0f; // Jarak antar grid
 
     private InventoryItem[,] gridArray;
     private RectTransform rectTransform;
 
     [Header("Visual Grid")]
     public bool showVisualGrid = true;
+    [Tooltip("Sprite untuk tiap kotak (ukuran ideal 50x50 atau sebanding TILE_SIZE)")]
+    public Sprite slotSprite;
     public Color gridColor = new Color(0.2f, 0.2f, 0.2f, 0.5f);
+    
+    public bool useOutline = true;
     public Color outlineColor = new Color(0f, 0f, 0f, 1f);
 
     [Header("UI")]
@@ -34,8 +39,10 @@ public class InventoryGrid : MonoBehaviour
 
     private void AdjustRectTransform()
     {
-        // Sesuaikan ukuran RectTransform otomatis berdasarkan ukuran grid dan TILE_SIZE
-        rectTransform.sizeDelta = new Vector2(gridWidth * TILE_SIZE, gridHeight * TILE_SIZE);
+        // Sesuaikan ukuran RectTransform otomatis berdasarkan ukuran grid, TILE_SIZE, dan spacing
+        float width = (gridWidth * TILE_SIZE) + (Mathf.Max(0, gridWidth - 1) * spacing);
+        float height = (gridHeight * TILE_SIZE) + (Mathf.Max(0, gridHeight - 1) * spacing);
+        rectTransform.sizeDelta = new Vector2(width, height);
     }
 
     private void CreateVisualGrid()
@@ -57,7 +64,10 @@ public class InventoryGrid : MonoBehaviour
         containerRect.anchorMin = new Vector2(0, 1);
         containerRect.anchorMax = new Vector2(0, 1);
         containerRect.pivot = new Vector2(0, 1);
-        containerRect.sizeDelta = new Vector2(gridWidth * TILE_SIZE, gridHeight * TILE_SIZE);
+        // Hitung ulang size container agar visual background dsb tidak bocor
+        float totalWidth = (gridWidth * TILE_SIZE) + (Mathf.Max(0, gridWidth - 1) * spacing);
+        float totalHeight = (gridHeight * TILE_SIZE) + (Mathf.Max(0, gridHeight - 1) * spacing);
+        containerRect.sizeDelta = new Vector2(totalWidth, totalHeight);
         containerRect.SetAsFirstSibling(); // Pastikan visual grid ada di belakang item
 
         for (int x = 0; x < gridWidth; x++)
@@ -71,14 +81,24 @@ public class InventoryGrid : MonoBehaviour
                 slotRect.anchorMax = new Vector2(0, 1);
                 slotRect.pivot = new Vector2(0, 1);
                 slotRect.sizeDelta = new Vector2(TILE_SIZE, TILE_SIZE);
-                slotRect.localPosition = new Vector2(x * TILE_SIZE, -y * TILE_SIZE);
+                
+                // Gunakan spacing untuk offset
+                slotRect.localPosition = new Vector2(x * (TILE_SIZE + spacing), -y * (TILE_SIZE + spacing));
 
                 UnityEngine.UI.Image img = slot.AddComponent<UnityEngine.UI.Image>();
+                if (slotSprite != null)
+                {
+                    img.sprite = slotSprite;
+                    img.type = UnityEngine.UI.Image.Type.Sliced; // Pakai Sliced/Simple tergantung gambarnya
+                }
                 img.color = gridColor;
 
-                UnityEngine.UI.Outline outline = slot.AddComponent<UnityEngine.UI.Outline>();
-                outline.effectColor = outlineColor;
-                outline.effectDistance = new Vector2(1, -1);
+                if (useOutline)
+                {
+                    UnityEngine.UI.Outline outline = slot.AddComponent<UnityEngine.UI.Outline>();
+                    outline.effectColor = outlineColor;
+                    outline.effectDistance = new Vector2(1, -1);
+                }
             }
         }
     }
@@ -148,8 +168,15 @@ public class InventoryGrid : MonoBehaviour
         float offsetX = localPos.x - localTopLeft.x;
         float offsetY = localTopLeft.y - localPos.y; // Y menurun
         
-        int x = Mathf.FloorToInt(offsetX / TILE_SIZE);
-        int y = Mathf.FloorToInt(offsetY / TILE_SIZE);
+        // Mempertimbangkan spacing dalam kalkulasi index
+        float cellStep = TILE_SIZE + spacing;
+        
+        // Tambahan sedikit toleransi klik agar gap tidak dihitung sebagai 'luar grid' kalau diklik
+        int x = Mathf.FloorToInt(offsetX / cellStep);
+        if (offsetX % cellStep > TILE_SIZE && x < gridWidth - 1) x = Mathf.FloorToInt((offsetX + spacing) / cellStep);
+        
+        int y = Mathf.FloorToInt(offsetY / cellStep);
+        if (offsetY % cellStep > TILE_SIZE && y < gridHeight - 1) y = Mathf.FloorToInt((offsetY + spacing) / cellStep);
         
         return new Vector2Int(x, y);
     }
@@ -190,12 +217,14 @@ public class InventoryGrid : MonoBehaviour
         item.onGridPositionX = x;
         item.onGridPositionY = y;
 
-        // Visual Snap yang akurat menggunakan math pivot
+        // Visual Snap yang akurat menggunakan math pivot beserta spacing
         RectTransform itemRect = item.GetComponent<RectTransform>();
         itemRect.SetParent(rectTransform, false); // false agar local pos/scale tidak kacau
         
         Vector2 gridTopLeft = new Vector2(-rectTransform.sizeDelta.x * rectTransform.pivot.x, rectTransform.sizeDelta.y * (1f - rectTransform.pivot.y));
-        Vector2 targetTopLeft = gridTopLeft + new Vector2(x * TILE_SIZE, -y * TILE_SIZE);
+        
+        // Target posisinya mengikuti kelipatan TILE_SIZE + spacing
+        Vector2 targetTopLeft = gridTopLeft + new Vector2(x * (TILE_SIZE + spacing), -y * (TILE_SIZE + spacing));
         
         Vector2 pivotOffset = new Vector2(itemRect.sizeDelta.x * itemRect.pivot.x, -itemRect.sizeDelta.y * (1f - itemRect.pivot.y));
         itemRect.localPosition = targetTopLeft + pivotOffset;

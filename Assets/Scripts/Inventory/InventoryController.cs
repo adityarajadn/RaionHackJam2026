@@ -213,7 +213,9 @@ public class InventoryController : MonoBehaviour
         highlightRect.gameObject.SetActive(true);
         highlightRect.SetParent(selectedGrid.transform, false);
         
-        highlightRect.sizeDelta = new Vector2(width * InventoryGrid.TILE_SIZE, height * InventoryGrid.TILE_SIZE);
+        float hw = width * InventoryGrid.TILE_SIZE + Mathf.Max(0, width - 1) * selectedGrid.spacing;
+        float hh = height * InventoryGrid.TILE_SIZE + Mathf.Max(0, height - 1) * selectedGrid.spacing;
+        highlightRect.sizeDelta = new Vector2(hw, hh);
         
         // Hijau jika bisa ditaruh, Merah jika tabrakan
         highlightImage.color = isValid ? new Color(0f, 1f, 0f, 0.4f) : new Color(1f, 0f, 0f, 0.4f);
@@ -221,7 +223,9 @@ public class InventoryController : MonoBehaviour
         // Snap posisi
         RectTransform gridRect = selectedGrid.GetComponent<RectTransform>();
         Vector2 gridTopLeft = new Vector2(-gridRect.sizeDelta.x * gridRect.pivot.x, gridRect.sizeDelta.y * (1f - gridRect.pivot.y));
-        Vector2 targetTopLeft = gridTopLeft + new Vector2(x * InventoryGrid.TILE_SIZE, -y * InventoryGrid.TILE_SIZE);
+        
+        // Gunakan spacing untuk menentukan posisi target
+        Vector2 targetTopLeft = gridTopLeft + new Vector2(x * (InventoryGrid.TILE_SIZE + selectedGrid.spacing), -y * (InventoryGrid.TILE_SIZE + selectedGrid.spacing));
         
         Vector2 pivotOffset = new Vector2(highlightRect.sizeDelta.x * highlightRect.pivot.x, -highlightRect.sizeDelta.y * (1f - highlightRect.pivot.y));
         

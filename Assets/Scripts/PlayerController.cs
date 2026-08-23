@@ -17,9 +17,12 @@ public class PlayerController : MonoBehaviour
     private bool canEnterNextArea = false;
     private NextAreaController nearbyNextArea;
 
+    private PlayerAnimationController playerAnimationController;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        playerAnimationController = GetComponent<PlayerAnimationController>();
         // Freeze rotation so the player doesn't tip over when moving
         rb.freezeRotation = true;
     }
@@ -33,9 +36,32 @@ public class PlayerController : MonoBehaviour
         if (Keyboard.current != null)
         {
             if (Keyboard.current.dKey.isPressed || Keyboard.current.rightArrowKey.isPressed)
+            {
                 horizontalInput += 1f;
+            }
             if (Keyboard.current.aKey.isPressed || Keyboard.current.leftArrowKey.isPressed)
+            {
                 horizontalInput -= 1f;
+            }
+            
+            if (playerAnimationController != null)
+            {
+                playerAnimationController.SetRunning(horizontalInput != 0f);
+            }
+
+            // Flip object (dan child-childnya) sesuai arah gerak
+            if (horizontalInput > 0)
+            {
+                Vector3 scale = transform.localScale;
+                scale.x = Mathf.Abs(scale.x);
+                transform.localScale = scale;
+            }
+            else if (horizontalInput < 0)
+            {
+                Vector3 scale = transform.localScale;
+                scale.x = -Mathf.Abs(scale.x);
+                transform.localScale = scale;
+            }
             
             // Cek tombol loncat (Space, W, atau Panah Atas)
             if (Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.wKey.wasPressedThisFrame || Keyboard.current.upArrowKey.wasPressedThisFrame)
@@ -46,7 +72,8 @@ public class PlayerController : MonoBehaviour
             {
                 if (canInteract && nearbyItem != null)
                 {
-                    InventoryController invController = FindObjectOfType<InventoryController>();
+                    if (playerAnimationController != null) playerAnimationController.SetInteracting(true);
+                    InventoryController invController = Object.FindFirstObjectByType<InventoryController>();
                     if (invController != null)
                     {
                         invController.ReceiveWorldItem(nearbyItem);
