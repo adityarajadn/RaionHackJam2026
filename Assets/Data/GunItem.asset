@@ -15,4 +15,5 @@ MonoBehaviour:
   itemName: Gun (3x2)
   width: 3
   height: 2
+  value: 10
   itemIcon: {fileID: 0}

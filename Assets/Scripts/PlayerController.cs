@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
 
     // Variabel untuk mengecek apakah player sedang di dekat objek yang bisa diinteraksi
     private bool canInteract = false;
+    private InteractableWorldItem nearbyItem;
 
     void Start()
     {
@@ -37,9 +38,16 @@ public class PlayerController : MonoBehaviour
                 jumpPressed = true;
                 
             // Cek interaksi dengan tombol E
-            if (canInteract && Keyboard.current.eKey.wasPressedThisFrame)
+            if (canInteract && Keyboard.current.eKey.wasPressedThisFrame && nearbyItem != null)
             {
-                OpenInventory();
+                InventoryController invController = FindObjectOfType<InventoryController>();
+                if (invController != null)
+                {
+                    invController.ReceiveWorldItem(nearbyItem);
+                    nearbyItem.HideWorldItem(); // Sembunyikan SATU KESATUAN item dari dunia
+                    nearbyItem = null;
+                    canInteract = false;
+                }
             }
         }
 
@@ -59,6 +67,11 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("Interactable"))
         {
             canInteract = true;
+            nearbyItem = collision.GetComponent<InteractableWorldItem>();
+            if (nearbyItem != null)
+            {
+                nearbyItem.TogglePrompt(true);
+            }
         }
     }
 
@@ -67,12 +80,12 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.CompareTag("Interactable"))
         {
-            canInteract = false;
+            if (nearbyItem != null && nearbyItem.gameObject == collision.gameObject)
+            {
+                nearbyItem.TogglePrompt(false);
+                nearbyItem = null;
+                canInteract = false;
+            }
         }
-    }
-
-    private void OpenInventory()
-    {
-        Debug.Log("Inventory Opened");
     }
 }

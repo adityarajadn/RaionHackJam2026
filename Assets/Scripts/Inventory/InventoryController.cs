@@ -6,8 +6,21 @@ public class InventoryController : MonoBehaviour
 {
     public InventoryGrid selectedGrid;
     
+    [Header("UI")]
+    public GameObject inventoryUI; // Panel utama inventory (misalnya background atau grid)
+    private bool isInventoryOpen = true;
+
+    [Header("Item Spawning")]
+    public GameObject inventoryItemPrefab; // Prefab UI Item
+    public RectTransform stagingArea; // Lokasi item yang baru dipungut (sebelah kiri)
+
     private InventoryItem selectedItem;
     private RectTransform selectedItemRect;
+    
+    // Menyimpan posisi asli item jika diambil dari grid
+    private int originalGridX = -1;
+    private int originalGridY = -1;
+    private bool originalWasRotated = false;
 
     // Highlighter untuk menunjukkan apakah posisi valid
     private RectTransform highlightRect;
@@ -31,7 +44,14 @@ public class InventoryController : MonoBehaviour
 
     private void Update()
     {
-        if (selectedGrid == null) return;
+        // Toggle inventory dengan tombol E
+        if (Keyboard.current.eKey.wasPressedThisFrame)
+        {
+            if (isInventoryOpen) HideInventory();
+            else ShowInventory();
+        }
+
+        if (!isInventoryOpen || selectedGrid == null) return;
         
         Vector2 mousePosition = Mouse.current.position.ReadValue();
 
@@ -60,6 +80,11 @@ public class InventoryController : MonoBehaviour
                 selectedItem = itemUnderMouse;
                 selectedItemRect = selectedItem.GetComponent<RectTransform>();
                 
+                // Simpan posisi aslinya agar bisa dikembalikan kalau batal ditaruh
+                originalGridX = selectedItem.onGridPositionX;
+                originalGridY = selectedItem.onGridPositionY;
+                originalWasRotated = selectedItem.isRotated;
+                
                 selectedGrid.RemoveItem(selectedItem);
                 
                 selectedItemRect.SetParent(transform, true); // Pindah parent ke Canvas
@@ -69,6 +94,28 @@ public class InventoryController : MonoBehaviour
         else
         {
             highlightRect.gameObject.SetActive(false);
+
+            // Cek apakah klik pada item di staging area (sebelah kiri grid)
+            if (Mouse.current.leftButton.wasPressedThisFrame && stagingArea != null)
+            {
+                foreach (Transform child in stagingArea)
+                {
+                    RectTransform childRect = child as RectTransform;
+                    if (childRect != null && RectTransformUtility.RectangleContainsScreenPoint(childRect, mousePosition, null))
+                    {
+                        selectedItem = child.GetComponent<InventoryItem>();
+                        selectedItemRect = childRect;
+                        
+                        // Item ini asalnya dari staging, bukan grid
+                        originalGridX = -1;
+                        originalGridY = -1;
+                        
+                        selectedItemRect.SetParent(transform, true);
+                        selectedItemRect.SetAsLastSibling();
+                        break;
+                    }
+                }
+            }
         }
     }
 
@@ -104,10 +151,49 @@ public class InventoryController : MonoBehaviour
             if (isValid)
             {
                 selectedGrid.PlaceItem(selectedItem, startX, startY);
+                
+                // Kita tidak lagi menghancurkan linkedWorldItem di sini, 
+                // melainkan membiarkannya tetap tersembunyi agar bisa di-drop ke dunia nanti.
+                
                 selectedItem = null;
                 highlightRect.gameObject.SetActive(false);
             }
+            else
+            {
+                // Jika klik di luar kotak grid, maka jatuhkan item ke dunia
+                RectTransform gridRect = selectedGrid.GetComponent<RectTransform>();
+                if (!RectTransformUtility.RectangleContainsScreenPoint(gridRect, mousePosition, null))
+                {
+                    DropItemToWorld(mousePosition);
+                }
+            }
         }
+    }
+
+    private void DropItemToWorld(Vector2 mousePosition)
+    {
+        if (selectedItem.linkedWorldItem != null)
+        {
+            // Hitung posisi dunia berdasarkan klik mouse
+            Camera mainCamera = Camera.main;
+            if (mainCamera != null)
+            {
+                Vector3 worldPos = mainCamera.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, Mathf.Abs(mainCamera.transform.position.z)));
+                worldPos.z = 0f; // Asumsi game 2D
+                
+                GameObject rootObj = selectedItem.linkedWorldItem.GetRootObject();
+                rootObj.transform.position = worldPos;
+                selectedItem.linkedWorldItem.ShowWorldItem();
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Item ini tidak memiliki referensi world item fisik, jadi langsung dihapus.");
+        }
+
+        Destroy(selectedItem.gameObject);
+        selectedItem = null;
+        highlightRect.gameObject.SetActive(false);
     }
 
     private void ShowHighlight(int x, int y, int width, int height, bool isValid)
@@ -121,11 +207,106 @@ public class InventoryController : MonoBehaviour
         highlightImage.color = isValid ? new Color(0f, 1f, 0f, 0.4f) : new Color(1f, 0f, 0f, 0.4f);
         
         // Snap posisi
-        Vector3[] gridCorners = new Vector3[4];
-        selectedGrid.GetComponent<RectTransform>().GetWorldCorners(gridCorners);
-        Vector3 localGridTopLeft = selectedGrid.GetComponent<RectTransform>().InverseTransformPoint(gridCorners[1]);
-
-        highlightRect.localPosition = new Vector2(localGridTopLeft.x + (x * InventoryGrid.TILE_SIZE), localGridTopLeft.y - (y * InventoryGrid.TILE_SIZE));
+        RectTransform gridRect = selectedGrid.GetComponent<RectTransform>();
+        Vector2 gridTopLeft = new Vector2(-gridRect.sizeDelta.x * gridRect.pivot.x, gridRect.sizeDelta.y * (1f - gridRect.pivot.y));
+        Vector2 targetTopLeft = gridTopLeft + new Vector2(x * InventoryGrid.TILE_SIZE, -y * InventoryGrid.TILE_SIZE);
+        
+        Vector2 pivotOffset = new Vector2(highlightRect.sizeDelta.x * highlightRect.pivot.x, -highlightRect.sizeDelta.y * (1f - highlightRect.pivot.y));
+        
+        highlightRect.localPosition = targetTopLeft + pivotOffset;
         highlightRect.SetAsLastSibling(); // Agar di atas grid tapi di bawah item saat di-drop
+    }
+
+    public void ShowInventory()
+    {
+        isInventoryOpen = true;
+        if (inventoryUI != null) inventoryUI.SetActive(true);
+        Time.timeScale = 0f; // Freeze gameplay
+    }
+
+    public void HideInventory()
+    {
+        isInventoryOpen = false;
+        if (inventoryUI != null) inventoryUI.SetActive(false);
+        
+        if (highlightRect != null) highlightRect.gameObject.SetActive(false);
+
+        Time.timeScale = 1f; // Resume gameplay
+        
+        // Kembalikan item di staging area ke dunia
+        if (stagingArea != null)
+        {
+            foreach (Transform child in stagingArea)
+            {
+                InventoryItem item = child.GetComponent<InventoryItem>();
+                if (item != null && item.linkedWorldItem != null)
+                {
+                    item.linkedWorldItem.ShowWorldItem();
+                }
+                Destroy(child.gameObject);
+            }
+        }
+        
+        // Jika sedang men-drag item, batalkan
+        if (selectedItem != null)
+        {
+            if (selectedItem.linkedWorldItem != null)
+            {
+                selectedItem.linkedWorldItem.ShowWorldItem();
+                Destroy(selectedItem.gameObject);
+            }
+            else
+            {
+                // Kembalikan ke posisi asal di grid
+                if (originalGridX != -1 && originalGridY != -1)
+                {
+                    // Pastikan rotasinya juga kembali seperti semula
+                    if (selectedItem.isRotated != originalWasRotated)
+                    {
+                        selectedItem.Rotate();
+                    }
+                    selectedGrid.PlaceItem(selectedItem, originalGridX, originalGridY);
+                }
+                else
+                {
+                    // Fallback jika tidak ada origin
+                    Destroy(selectedItem.gameObject);
+                }
+            }
+            selectedItem = null;
+        }
+    }
+
+    public void ReceiveWorldItem(InteractableWorldItem worldItem)
+    {
+        ShowInventory(); // Buka inventory secara otomatis
+
+        if (inventoryItemPrefab == null)
+        {
+            Debug.LogError("Inventory Item Prefab belum diset di InventoryController!");
+            return;
+        }
+
+        // Bikin staging area otomatis kalau belum diset
+        if (stagingArea == null && selectedGrid != null)
+        {
+            GameObject stagingObj = new GameObject("StagingArea");
+            stagingArea = stagingObj.AddComponent<RectTransform>();
+            stagingArea.SetParent(selectedGrid.transform.parent, false);
+            stagingArea.sizeDelta = new Vector2(200, 200);
+            
+            RectTransform gridRect = selectedGrid.GetComponent<RectTransform>();
+            float offset = (gridRect.sizeDelta.x / 2f) + 150f;
+            stagingArea.localPosition = gridRect.localPosition - new Vector3(offset, 0, 0);
+        }
+
+        GameObject newItemObj = Instantiate(inventoryItemPrefab, stagingArea);
+        InventoryItem newItem = newItemObj.GetComponent<InventoryItem>();
+        newItem.Initialize(worldItem.itemData);
+        newItem.linkedWorldItem = worldItem;
+
+        // Atur posisi acak sedikit agar kalau ada banyak item tidak menumpuk persis
+        RectTransform itemRect = newItemObj.GetComponent<RectTransform>();
+        itemRect.localPosition = new Vector3(Random.Range(-20f, 20f), Random.Range(-20f, 20f), 0);
     }
 }

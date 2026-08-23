@@ -15,4 +15,5 @@ MonoBehaviour:
   itemName: Shield (2x2)
   width: 2
   height: 2
+  value: 20
   itemIcon: {fileID: 0}

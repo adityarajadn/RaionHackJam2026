@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class InventoryItem : MonoBehaviour
 {
     public ItemData itemData;
+    public InteractableWorldItem linkedWorldItem; // Referensi ke objek di dunia game
     public int onGridPositionX;
     public int onGridPositionY;
     public bool isRotated = false;
@@ -31,23 +32,33 @@ public class InventoryItem : MonoBehaviour
     {
         this.itemData = data;
         
-        // Buat objek gambar sebagai child agar rotasi tidak mengacaukan pivot utama
-        GameObject imageObj = new GameObject("ItemImage");
-        imageObj.transform.SetParent(transform, false);
+        // Cek apakah itemImage sudah ada (dari prefab). Jika belum, buat baru.
+        if (itemImage == null)
+        {
+            GameObject imageObj = new GameObject("ItemImage");
+            imageObj.transform.SetParent(transform, false);
+            itemImage = imageObj.AddComponent<Image>();
+            
+            // Setup default pivot hanya jika ini adalah objek baru
+            RectTransform childRect = itemImage.GetComponent<RectTransform>();
+            childRect.anchorMin = new Vector2(0.5f, 0.5f);
+            childRect.anchorMax = new Vector2(0.5f, 0.5f);
+            childRect.pivot = new Vector2(0.5f, 0.5f);
+            childRect.sizeDelta = new Vector2(data.width * TILE_SIZE, data.height * TILE_SIZE);
+            childRect.localPosition = Vector2.zero;
+        }
+        else
+        {
+            // Jika sudah ada (dari prefab), sesuaikan saja ukurannya
+            RectTransform childRect = itemImage.GetComponent<RectTransform>();
+            childRect.sizeDelta = new Vector2(data.width * TILE_SIZE, data.height * TILE_SIZE);
+            childRect.anchoredPosition = Vector2.zero;
+        }
         
-        itemImage = imageObj.AddComponent<Image>();
         itemImage.sprite = data.itemIcon;
         itemImage.preserveAspect = true;
         // Warna item sedikit semi transparan jika mau, tapi ini defaultnya solid
         itemImage.raycastTarget = false; // Karena parent (InventoryItem) yang jadi target kalau ada
-
-        // Setup pivot child agar rotasi berpusat di tengah dengan ukuran tetap (tidak stretch)
-        RectTransform childRect = itemImage.GetComponent<RectTransform>();
-        childRect.anchorMin = new Vector2(0.5f, 0.5f);
-        childRect.anchorMax = new Vector2(0.5f, 0.5f);
-        childRect.pivot = new Vector2(0.5f, 0.5f);
-        childRect.sizeDelta = new Vector2(data.width * TILE_SIZE, data.height * TILE_SIZE);
-        childRect.localPosition = Vector2.zero;
 
         // Atur ukuran utama
         RefreshVisuals();
