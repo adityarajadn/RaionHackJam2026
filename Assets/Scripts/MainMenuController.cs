@@ -7,11 +7,17 @@ public class MainMenuController : MonoBehaviour
     {
         // Pindah ke scene TestScene
         SceneManager.LoadScene("TestScene");
+        AudioManager.Instance.PlayMusic("SneakyMusic");
     }
 
     public void OpenSettings()
     {
         Debug.Log("Scene Setting dibuka!");
+    }
+
+    public void OpenCredits()
+    {
+        SceneManager.LoadScene("Credit");
     }
 
     public void ExitGame()
