@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f836b588c80ba5468044a2a214d84f9, type: 3}
-  m_Name: ShieldItem
+  m_Name: Barangdiatastempattidur
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemName: Shield (2x2)
-  width: 2
-  height: 2
-  value: 20
+  itemName: Barang di atas tempat tidur
+  width: 1
+  height: 1
+  value: 750
   itemIcon: {fileID: 0}

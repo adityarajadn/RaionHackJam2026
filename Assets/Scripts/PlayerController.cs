@@ -7,15 +7,11 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpForce = 5f; // Kekuatan loncat
+    private bool canDoubleJump = false;
     private Rigidbody2D rb;
 
     // Variabel untuk mengecek apakah player sedang di dekat objek yang bisa diinteraksi
-    private bool canInteract = false;
-    private InteractableWorldItem nearbyItem;
-
-    // Variabel untuk mengecek area selanjutnya
-    private bool canEnterNextArea = false;
-    private NextAreaController nearbyNextArea;
+    private Interactable nearbyInteractable;
 
     private PlayerAnimationController playerAnimationController;
 
@@ -70,21 +66,18 @@ public class PlayerController : MonoBehaviour
             // Cek interaksi dengan tombol E
             if (Keyboard.current.eKey.wasPressedThisFrame)
             {
-                if (canInteract && nearbyItem != null)
+                if (nearbyInteractable != null)
                 {
                     if (playerAnimationController != null) playerAnimationController.SetInteracting(true);
-                    InventoryController invController = Object.FindFirstObjectByType<InventoryController>();
-                    if (invController != null)
+                    
+                    // Panggil fungsi Interact dari objek yang dituju
+                    nearbyInteractable.Interact();
+                    
+                    // Jika objek yang diinteraksi adalah item, reset referensinya karena itemnya mungkin hilang/diambil
+                    if (nearbyInteractable is InteractableWorldItem)
                     {
-                        invController.ReceiveWorldItem(nearbyItem);
-                        nearbyItem.HideWorldItem(); // Sembunyikan SATU KESATUAN item dari dunia
-                        nearbyItem = null;
-                        canInteract = false;
+                        nearbyInteractable = null;
                     }
-                }
-                else if (canEnterNextArea && nearbyNextArea != null)
-                {
-                    nearbyNextArea.GoToNextLevel();
                 }
             }
         }
@@ -92,56 +85,47 @@ public class PlayerController : MonoBehaviour
         // Terapkan kecepatan horizontal
         rb.linearVelocity = new Vector2(horizontalInput * moveSpeed, rb.linearVelocity.y);
 
-        // Loncat: Hanya bisa loncat jika kecepatan Y hampir 0 (artinya sedang di tanah)
-        if (jumpPressed && Mathf.Abs(rb.linearVelocity.y) < 0.01f)
+        // Loncat dan Double Jump
+        bool isGrounded = Mathf.Abs(rb.linearVelocity.y) < 0.01f;
+
+        if (isGrounded)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            canDoubleJump = true;
+        }
+
+        if (jumpPressed)
+        {
+            if (isGrounded)
+            {
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            }
+            else if (canDoubleJump)
+            {
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+                canDoubleJump = false;
+            }
         }
     }
 
     // Mendeteksi saat player mendekati objek interaktif
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Interactable"))
+        Interactable interactable = collision.GetComponent<Interactable>();
+        if (interactable != null)
         {
-            canInteract = true;
-            nearbyItem = collision.GetComponent<InteractableWorldItem>();
-            if (nearbyItem != null)
-            {
-                nearbyItem.TogglePrompt(true);
-            }
-        }
-        else if (collision.CompareTag("NextArea"))
-        {
-            canEnterNextArea = true;
-            nearbyNextArea = collision.GetComponent<NextAreaController>();
-            if (nearbyNextArea != null)
-            {
-                nearbyNextArea.TogglePrompt(true);
-            }
+            nearbyInteractable = interactable;
+            nearbyInteractable.TogglePrompt(true);
         }
     }
 
     // Mendeteksi saat player menjauhi objek interaktif
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Interactable"))
+        Interactable interactable = collision.GetComponent<Interactable>();
+        if (interactable != null && nearbyInteractable == interactable)
         {
-            if (nearbyItem != null && nearbyItem.gameObject == collision.gameObject)
-            {
-                nearbyItem.TogglePrompt(false);
-                nearbyItem = null;
-                canInteract = false;
-            }
-        }
-        else if (collision.CompareTag("NextArea"))
-        {
-            if (nearbyNextArea != null && nearbyNextArea.gameObject == collision.gameObject)
-            {
-                nearbyNextArea.TogglePrompt(false);
-                nearbyNextArea = null;
-                canEnterNextArea = false;
-            }
+            nearbyInteractable.TogglePrompt(false);
+            nearbyInteractable = null;
         }
     }
 }

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f836b588c80ba5468044a2a214d84f9, type: 3}
-  m_Name: GunItem
+  m_Name: Sendok
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemName: Gun (3x2)
-  width: 3
-  height: 2
-  value: 10
+  itemName: Sendok
+  width: 1
+  height: 3
+  value: 50
   itemIcon: {fileID: 0}

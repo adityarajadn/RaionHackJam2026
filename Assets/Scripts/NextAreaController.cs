@@ -1,30 +1,16 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
-public class NextAreaController : MonoBehaviour
+public class NextAreaController : Interactable
 {
-    [Header("UI & Settings")]
-    [Tooltip("Masukkan Game Object UI tombol E di sini")]
-    [SerializeField] private GameObject promptUI;
-    
+    [Header("Next Area Settings")]
     [Tooltip("Nama Scene selanjutnya yang akan diload")]
     [SerializeField] private string nextSceneName;
 
-    void Start()
+    public override void Interact()
     {
-        // Pastikan prompt disembunyikan saat awal mula
-        if (promptUI != null)
-        {
-            promptUI.SetActive(false);
-        }
-    }
-
-    public void TogglePrompt(bool show)
-    {
-        if (promptUI != null)
-        {
-            promptUI.SetActive(show);
-        }
+        GoToNextLevel();
     }
 
     public void GoToNextLevel()

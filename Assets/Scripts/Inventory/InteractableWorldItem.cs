@@ -1,37 +1,18 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Collider2D))]
-public class InteractableWorldItem : MonoBehaviour
+public class InteractableWorldItem : Interactable
 {
     public ItemData itemData;
     
-    [Tooltip("Objek visual 'Key E' yang akan muncul saat player mendekat")]
-    public GameObject keyEPrompt;
+    // Awake dan TogglePrompt sudah di-handle oleh base class (Interactable)
 
-    private void Awake()
+    public override void Interact()
     {
-        // Pastikan collider diset sebagai trigger
-        Collider2D coll = GetComponent<Collider2D>();
-        if (coll != null)
+        InventoryController invController = Object.FindFirstObjectByType<InventoryController>();
+        if (invController != null)
         {
-            coll.isTrigger = true;
-        }
-        
-        // Pastikan tag-nya "Interactable" sesuai dengan PlayerController
-        gameObject.tag = "Interactable";
-
-        // Sembunyikan prompt pada awalnya
-        if (keyEPrompt != null)
-        {
-            keyEPrompt.SetActive(false);
-        }
-    }
-
-    public void TogglePrompt(bool show)
-    {
-        if (keyEPrompt != null)
-        {
-            keyEPrompt.SetActive(show);
+            invController.ReceiveWorldItem(this);
+            HideWorldItem(); // Sembunyikan SATU KESATUAN item dari dunia
         }
     }
 
