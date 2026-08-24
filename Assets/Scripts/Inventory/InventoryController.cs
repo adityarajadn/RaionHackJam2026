@@ -9,6 +9,7 @@ public class InventoryController : MonoBehaviour
     [Header("UI")]
     public GameObject inventoryUI; // Panel utama inventory (misalnya background atau grid)
     private bool isInventoryOpen = true;
+    public static bool IsInventoryOpen { get; private set; }
 
     [Header("Item Spawning")]
     public GameObject inventoryItemPrefab; // Prefab UI Item
@@ -88,6 +89,7 @@ public class InventoryController : MonoBehaviour
                 selectedGrid.RemoveItem(selectedItem);
                 
                 selectedItemRect.SetParent(transform, true); // Pindah parent ke Canvas
+                selectedItemRect.localScale = Vector3.one;
                 selectedItemRect.SetAsLastSibling(); // Agar berada di paling atas
             }
         }
@@ -115,6 +117,7 @@ public class InventoryController : MonoBehaviour
                         originalGridY = -1;
                         
                         selectedItemRect.SetParent(transform, true);
+                        selectedItemRect.localScale = Vector3.one;
                         selectedItemRect.SetAsLastSibling();
                         break;
                     }
@@ -236,6 +239,7 @@ public class InventoryController : MonoBehaviour
     public void ShowInventory()
     {
         isInventoryOpen = true;
+        IsInventoryOpen = true;
         if (inventoryUI != null) inventoryUI.SetActive(true);
         Time.timeScale = 0f; // Freeze gameplay
     }
@@ -243,6 +247,7 @@ public class InventoryController : MonoBehaviour
     public void HideInventory()
     {
         isInventoryOpen = false;
+        IsInventoryOpen = false;
         if (inventoryUI != null) inventoryUI.SetActive(false);
         
         if (highlightRect != null) highlightRect.gameObject.SetActive(false);

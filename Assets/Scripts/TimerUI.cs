@@ -26,12 +26,30 @@ public class TimerUI : MonoBehaviour
     {
         if (isTimerRunning)
         {
-            currentTime -= Time.deltaTime;
+            float delta = Time.deltaTime;
+            // Jika inventory buka (timeScale = 0), tetap hitung timer pakai unscaledDeltaTime
+            if (InventoryController.IsInventoryOpen && Time.timeScale == 0f)
+            {
+                delta = Time.unscaledDeltaTime;
+            }
+
+            // Tapi kalau game over, jangan dikurangi
+            if (GameplayManager.Instance != null && GameplayManager.Instance.isGameOver)
+            {
+                delta = 0f;
+            }
+
+            currentTime -= delta;
             if (currentTime <= 0f)
             {
                 currentTime = 0f;
                 isTimerRunning = false;
-                // Panggil event waktu habis di sini jika diperlukan
+                
+                // Beritahu GameplayManager bahwa waktu telah habis
+                if (GameplayManager.Instance != null)
+                {
+                    GameplayManager.Instance.OnTimeUp();
+                }
             }
             UpdateTimerDisplay(currentTime);
         }

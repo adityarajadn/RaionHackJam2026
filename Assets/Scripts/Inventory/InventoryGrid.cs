@@ -220,6 +220,7 @@ public class InventoryGrid : MonoBehaviour
         // Visual Snap yang akurat menggunakan math pivot beserta spacing
         RectTransform itemRect = item.GetComponent<RectTransform>();
         itemRect.SetParent(rectTransform, false); // false agar local pos/scale tidak kacau
+        itemRect.localScale = Vector3.one;
         
         Vector2 gridTopLeft = new Vector2(-rectTransform.sizeDelta.x * rectTransform.pivot.x, rectTransform.sizeDelta.y * (1f - rectTransform.pivot.y));
         
@@ -289,6 +290,11 @@ public class InventoryGrid : MonoBehaviour
                     countedItems.Add(item);
                 }
             }
+        }
+
+        if (GameplayManager.Instance != null)
+        {
+            GameplayManager.Instance.totalScore = total;
         }
 
         totalValueText.text = "Total Value: " + total.ToString();

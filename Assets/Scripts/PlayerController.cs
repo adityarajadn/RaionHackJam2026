@@ -25,6 +25,9 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (GameplayManager.Instance != null && GameplayManager.Instance.isGameOver) return;
+        if (Time.timeScale == 0f) return;
+
         float horizontalInput = 0f;
         bool jumpPressed = false;
 
