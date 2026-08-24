@@ -45,7 +45,7 @@ public class InventoryController : MonoBehaviour
     private void Update()
     {
         // Toggle inventory dengan tombol E
-        if (Keyboard.current.eKey.wasPressedThisFrame)
+        if (Keyboard.current.bKey.wasPressedThisFrame)
         {
             if (isInventoryOpen) HideInventory();
             else ShowInventory();
@@ -323,6 +323,9 @@ public class InventoryController : MonoBehaviour
 
         // Atur posisi acak sedikit agar kalau ada banyak item tidak menumpuk persis
         RectTransform itemRect = newItemObj.GetComponent<RectTransform>();
-        itemRect.localPosition = new Vector3(Random.Range(-20f, 20f), Random.Range(-20f, 20f), 0);
+        if (stagingArea.GetComponent<UnityEngine.UI.LayoutGroup>() == null)
+        {
+            itemRect.localPosition = new Vector3(Random.Range(-20f, 20f), Random.Range(-20f, 20f), 0);
+        }
     }
 }

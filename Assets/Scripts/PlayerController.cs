@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
 
     // Variabel untuk mengecek apakah player sedang di dekat objek yang bisa diinteraksi
-    private Interactable nearbyInteractable;
+    private System.Collections.Generic.List<Interactable> nearbyInteractables = new System.Collections.Generic.List<Interactable>();
 
     private PlayerAnimationController playerAnimationController;
 
@@ -66,17 +66,40 @@ public class PlayerController : MonoBehaviour
             // Cek interaksi dengan tombol E
             if (Keyboard.current.eKey.wasPressedThisFrame)
             {
-                if (nearbyInteractable != null)
+                // Bersihkan null references jika ada objek yang hancur
+                nearbyInteractables.RemoveAll(i => i == null);
+
+                if (nearbyInteractables.Count > 0)
                 {
                     if (playerAnimationController != null) playerAnimationController.SetInteracting(true);
                     
-                    // Panggil fungsi Interact dari objek yang dituju
-                    nearbyInteractable.Interact();
+                    // Kita kumpulkan semua item untuk diambil sekaligus
+                    bool hasItem = false;
+                    System.Collections.Generic.List<Interactable> toInteract = new System.Collections.Generic.List<Interactable>();
                     
-                    // Jika objek yang diinteraksi adalah item, reset referensinya karena itemnya mungkin hilang/diambil
-                    if (nearbyInteractable is InteractableWorldItem)
+                    foreach (var interactable in nearbyInteractables)
                     {
-                        nearbyInteractable = null;
+                        if (interactable is InteractableWorldItem)
+                        {
+                            toInteract.Add(interactable);
+                            hasItem = true;
+                        }
+                    }
+
+                    // Jika ada item, ambil semua item tersebut ke staging area
+                    if (hasItem)
+                    {
+                        foreach (var item in toInteract)
+                        {
+                            item.Interact();
+                        }
+                        // Hapus dari daftar di sekitar karena sudah diambil
+                        nearbyInteractables.RemoveAll(i => i is InteractableWorldItem);
+                    }
+                    else
+                    {
+                        // Jika tidak ada item, interaksi dengan 1 objek lain yang terdekat (misal: pintu, next area)
+                        nearbyInteractables[0].Interact();
                     }
                 }
             }
@@ -113,8 +136,11 @@ public class PlayerController : MonoBehaviour
         Interactable interactable = collision.GetComponent<Interactable>();
         if (interactable != null)
         {
-            nearbyInteractable = interactable;
-            nearbyInteractable.TogglePrompt(true);
+            if (!nearbyInteractables.Contains(interactable))
+            {
+                nearbyInteractables.Add(interactable);
+                interactable.TogglePrompt(true);
+            }
         }
     }
 
@@ -122,10 +148,10 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         Interactable interactable = collision.GetComponent<Interactable>();
-        if (interactable != null && nearbyInteractable == interactable)
+        if (interactable != null && nearbyInteractables.Contains(interactable))
         {
-            nearbyInteractable.TogglePrompt(false);
-            nearbyInteractable = null;
+            interactable.TogglePrompt(false);
+            nearbyInteractables.Remove(interactable);
         }
     }
 }
