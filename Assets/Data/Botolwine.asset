@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Botolwine
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Botol wine
-  width: 2
-  height: 3
+  width: 1
+  height: 1
   value: 900
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 8988746456409861078, guid: 0683fa517960a214584f977f7cc2dff8, type: 3}

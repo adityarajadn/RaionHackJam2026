@@ -45,6 +45,12 @@ public class InventoryController : MonoBehaviour
 
     private void Update()
     {
+        if (GameplayManager.Instance != null && GameplayManager.Instance.isGameOver)
+        {
+            if (isInventoryOpen) HideInventory();
+            return;
+        }
+
         // Toggle inventory dengan tombol E
         if (Keyboard.current.bKey.wasPressedThisFrame)
         {

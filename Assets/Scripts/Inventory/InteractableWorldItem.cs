@@ -4,6 +4,25 @@ public class InteractableWorldItem : Interactable
 {
     public ItemData itemData;
     
+    [Header("Detection Sprites")]
+    public GameObject spriteNotDetected;
+    public GameObject spriteDetected;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        // Set initial state
+        if (spriteNotDetected != null) spriteNotDetected.SetActive(true);
+        if (spriteDetected != null) spriteDetected.SetActive(false);
+    }
+
+    public override void TogglePrompt(bool show)
+    {
+        base.TogglePrompt(show);
+        if (spriteNotDetected != null) spriteNotDetected.SetActive(!show);
+        if (spriteDetected != null) spriteDetected.SetActive(show);
+    }
+    
     // Awake dan TogglePrompt sudah di-handle oleh base class (Interactable)
 
     public override void Interact()

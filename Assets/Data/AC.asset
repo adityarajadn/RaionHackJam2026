@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AC
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: AC
-  width: 4
-  height: 6
+  width: 3
+  height: 2
   value: 3500
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 2379690409133253606, guid: f6dbd325b5d8e3949b8cba7b9efcf68f, type: 3}

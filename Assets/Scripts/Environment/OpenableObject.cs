@@ -8,6 +8,8 @@ public class OpenableObject : Interactable
     [Tooltip("GameObject atau SpriteRenderer untuk state terbuka")]
     public GameObject openSprite;
 
+    public GameObject itemInside;
+
     private bool isOpen = false;
 
     protected override void Awake()
@@ -15,12 +17,14 @@ public class OpenableObject : Interactable
         base.Awake();
         // Pastikan sprite yang aktif sesuai state awal
         UpdateSpriteState();
+        hideItemInside();
     }
 
     public override void Interact()
     {
         isOpen = !isOpen;
         UpdateSpriteState();
+        showItemInside();
     }
 
     private void UpdateSpriteState()
@@ -33,6 +37,18 @@ public class OpenableObject : Interactable
         if (openSprite != null)
         {
             openSprite.SetActive(isOpen);
+        }
+    }
+
+    public void hideItemInside() {
+        if(itemInside != null) {
+            itemInside.SetActive(false);
+        }
+    }
+
+    public void showItemInside() {
+        if(itemInside != null) {
+            itemInside.SetActive(true);
         }
     }
 }

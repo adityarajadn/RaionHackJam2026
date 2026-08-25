@@ -10,14 +10,13 @@ public class MainMenuController : MonoBehaviour
         AudioManager.Instance.PlayMusic("SneakyMusic");
     }
 
-    public void OpenSettings()
-    {
-        Debug.Log("Scene Setting dibuka!");
-    }
-
     public void OpenCredits()
     {
         SceneManager.LoadScene("Credit");
+    }
+
+    public void OpenSettings() {
+        SceneManager.LoadScene("Settings");
     }
 
     public void ExitGame()
