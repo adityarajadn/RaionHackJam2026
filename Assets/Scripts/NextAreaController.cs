@@ -8,6 +8,9 @@ public class NextAreaController : Interactable
     [Tooltip("Nama Scene selanjutnya yang akan diload")]
     [SerializeField] private string nextSceneName;
 
+    [SerializeField] private Transform destinationPos;
+    [SerializeField] private GameObject playerObject;
+
     public override void Interact()
     {
         GoToNextLevel();
@@ -15,15 +18,6 @@ public class NextAreaController : Interactable
 
     public void GoToNextLevel()
     {
-        if (!string.IsNullOrEmpty(nextSceneName))
-        {
-            // Reset Time Scale just in case
-            Time.timeScale = 1f;
-            SceneManager.LoadScene(nextSceneName);
-        }
-        else
-        {
-            Debug.LogWarning("Next Scene Name belum diisi di Inspector!");
-        }
+        playerObject.transform.position = destinationPos.position;
     }
 }

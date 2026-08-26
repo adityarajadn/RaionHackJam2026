@@ -6,7 +6,7 @@ public class MainMenuController : MonoBehaviour
     public void PlayGame()
     {
         // Pindah ke scene TestScene
-        SceneManager.LoadScene("Room1");
+        SceneManager.LoadScene("HowToPlay");
         AudioManager.Instance.PlayMusic("SneakyMusic");
     }
 

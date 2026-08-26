@@ -6,7 +6,11 @@ using UnityEngine.InputSystem; // Membutuhkan namespace ini
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float jumpForce = 5f; // Kekuatan loncat
+    [SerializeField] private float jumpForce = 12f; // Disesuaikan untuk gravitasi yang lebih berat
+    [SerializeField] private float fallMultiplier = 2.5f; // Semakin besar semakin cepat jatuh
+    [SerializeField] private float lowJumpMultiplier = 2f; // Semakin besar semakin cepat turun jika tombol dilepas
+    [Range(0, .3f)] [SerializeField] private float movementSmoothing = .05f;
+    private Vector2 velocity = Vector2.zero;
     private bool canDoubleJump = false;
     private Rigidbody2D rb;
 
@@ -108,8 +112,9 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // Terapkan kecepatan horizontal
-        rb.linearVelocity = new Vector2(horizontalInput * moveSpeed, rb.linearVelocity.y);
+        // Terapkan kecepatan horizontal dengan efek smoothing (halus)
+        Vector2 targetVelocity = new Vector2(horizontalInput * moveSpeed, rb.linearVelocity.y);
+        rb.linearVelocity = Vector2.SmoothDamp(rb.linearVelocity, targetVelocity, ref velocity, movementSmoothing);
 
         // Loncat dan Double Jump
         bool isGrounded = Mathf.Abs(rb.linearVelocity.y) < 0.01f;
@@ -130,6 +135,17 @@ public class PlayerController : MonoBehaviour
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
                 canDoubleJump = false;
             }
+        }
+
+        // Bikin jatuhnya lebih tajam (nggak kaya di bulan)
+        if (rb.linearVelocity.y < 0)
+        {
+            rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+        }
+        else if (rb.linearVelocity.y > 0 && !(Keyboard.current.spaceKey.isPressed || Keyboard.current.wKey.isPressed || Keyboard.current.upArrowKey.isPressed))
+        {
+            // Tombol dilepas sebelum mencapai titik tertinggi -> potong loncatan
+            rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
         }
     }
 
