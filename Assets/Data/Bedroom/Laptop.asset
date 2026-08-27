@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Laptop
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Laptop
-  width: 4
-  height: 3
+  width: 3
+  height: 2
   value: 2500
-  weight: 2
+  weight: 4
   itemIcon: {fileID: 7729265594681976832, guid: d16ceed605f4e7e4f90d31ab2289a42c, type: 3}

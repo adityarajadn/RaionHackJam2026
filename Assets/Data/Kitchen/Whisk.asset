@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Whisk
   width: 1
-  height: 3
+  height: 2
   value: 70
-  weight: 0.1
-  itemIcon: {fileID: 0}
+  weight: 0.2
+  itemIcon: {fileID: -3914427088199776667, guid: 269f40a2a29690c42b2cc19a9585fd5a, type: 3}

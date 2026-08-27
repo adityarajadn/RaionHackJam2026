@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f836b588c80ba5468044a2a214d84f9, type: 3}
-  m_Name: Keju
+  m_Name: Fridge
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemName: Keju
-  width: 1
+  itemName: Fridge
+  width: 2
   height: 1
-  value: 180
-  weight: 0.5
-  itemIcon: {fileID: 0}
+  value: 200
+  weight: 40
+  itemIcon: {fileID: -8543947805752190069, guid: 074df45024661c346b2c0d4a71794e91, type: 3}

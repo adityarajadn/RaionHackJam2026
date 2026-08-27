@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e000e2ec48e553b49986bd0ee9cca0f6
+guid: e578048c8216b9e4fa89cf6dcd0c6107
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5878674012283958741
-    second: HowToPlayPanel (1)_0
+      213: -4019097937451829302
+    second: MainMenuButton_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: HowToPlayPanel (1)_0
+      name: MainMenuButton_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1345
-        height: 777
+        width: 347
+        height: 126
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5d5718c1ede359150800000000000000
-      internalID: 5878674012283958741
+      spriteID: ac7bda058bb4938c0800000000000000
+      internalID: -4019097937451829302
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      HowToPlayPanel (1)_0: 5878674012283958741
+      MainMenuButton_0: -4019097937451829302
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f836b588c80ba5468044a2a214d84f9, type: 3}
-  m_Name: Wajan
+  m_Name: WineBottle
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemName: Wajan
-  width: 3
+  itemName: Wine Bottle
+  width: 1
   height: 2
-  value: 300
-  weight: 1.5
-  itemIcon: {fileID: -1052294293756212139, guid: 5accb6255cf28524ebbb1e2cc7dd7087, type: 3}
+  value: 900
+  weight: 3
+  itemIcon: {fileID: -5969057675619795091, guid: a8104541d585d684387e6ce60be9e96f, type: 3}

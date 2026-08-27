@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f836b588c80ba5468044a2a214d84f9, type: 3}
-  m_Name: Pisau
+  m_Name: RaionPoster
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemName: Pisau
-  width: 1
-  height: 2
-  value: 150
+  itemName: Raion Poster
+  width: 2
+  height: 3
+  value: 69
   weight: 0.2
-  itemIcon: {fileID: -4843709762093945026, guid: 70d8519146f6a3d44907688af936074c, type: 3}
+  itemIcon: {fileID: 8033092973025764044, guid: 67a372888b6fc464ebe66e546161fd98, type: 3}

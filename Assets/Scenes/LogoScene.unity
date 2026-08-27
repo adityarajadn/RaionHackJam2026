@@ -431,7 +431,7 @@ MonoBehaviour:
   - name: MainMenu
     clip: {fileID: 8300000, guid: 4aed36362ff20a349a37a97873243cdc, type: 3}
   sfxSounds:
-  - name: buka pintu&pindah ruangan
+  - name: door
     clip: {fileID: 8300000, guid: d00945ae85bc26146a04d46b1c53c2e9, type: 3}
   - name: clickButton
     clip: {fileID: 8300000, guid: df77c16589576c749bab2266701378cc, type: 3}

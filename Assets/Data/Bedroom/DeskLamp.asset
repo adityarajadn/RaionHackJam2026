@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f836b588c80ba5468044a2a214d84f9, type: 3}
   m_Name: DeskLamp
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemName: Lampu belajar
+  itemName: Desk Lamp
   width: 2
   height: 3
   value: 250
-  weight: 1.2
+  weight: 2.4
   itemIcon: {fileID: -7645678482389059344, guid: 7d73c1d697b3b2a419ac07e88dc3532b, type: 3}

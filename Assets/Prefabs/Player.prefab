@@ -231,7 +231,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 2ed8d8fee83acc2448bb90343ded7dc2, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -302,6 +302,7 @@ MonoBehaviour:
   fallMultiplier: 2.5
   lowJumpMultiplier: 2
   movementSmoothing: 0.05
+  shadowObject: {fileID: 0}
 --- !u!95 &6242400985090030767
 Animator:
   serializedVersion: 7

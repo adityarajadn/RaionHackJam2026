@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f836b588c80ba5468044a2a214d84f9, type: 3}
-  m_Name: Gelaswine
+  m_Name: Perfume
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemName: Gelas wine
-  width: 2
+  itemName: Perfume
+  width: 1
   height: 1
-  value: 120
-  weight: 0.3
-  itemIcon: {fileID: -3914427088199776667, guid: 269f40a2a29690c42b2cc19a9585fd5a, type: 3}
+  value: 500
+  weight: 0.6
+  itemIcon: {fileID: 8988746456409861078, guid: 0683fa517960a214584f977f7cc2dff8, type: 3}

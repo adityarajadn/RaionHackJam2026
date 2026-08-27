@@ -25,6 +25,11 @@ public class OpenableObject : Interactable
         isOpen = !isOpen;
         UpdateSpriteState();
         showItemInside();
+        
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX("door");
+        }
     }
 
     private void UpdateSpriteState()

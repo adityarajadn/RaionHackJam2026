@@ -37,6 +37,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private float dialogCooldown = 0f;
+
     void Update()
     {
         if (GameplayManager.Instance != null && GameplayManager.Instance.isGameOver) return;
@@ -45,8 +47,21 @@ public class PlayerController : MonoBehaviour
         float horizontalInput = 0f;
         bool jumpPressed = false;
 
+        // Cek dialog
+        bool isDialogActive = DialogManager.Instance != null && DialogManager.Instance.dialogPanel.activeSelf;
+        
+        if (isDialogActive) 
+        {
+            dialogCooldown = 0.2f; // Delay input sedikit setelah dialog tertutup agar tidak ikut lompat
+        }
+        else if (dialogCooldown > 0f)
+        {
+            dialogCooldown -= Time.deltaTime;
+            isDialogActive = true; // Anggap dialog masih aktif untuk blokir input
+        }
+
         // Membaca input menggunakan New Input System (Keyboard)
-        if (Keyboard.current != null)
+        if (Keyboard.current != null && !isDialogActive)
         {
             if (Keyboard.current.dKey.isPressed || Keyboard.current.rightArrowKey.isPressed)
             {
@@ -55,11 +70,6 @@ public class PlayerController : MonoBehaviour
             if (Keyboard.current.aKey.isPressed || Keyboard.current.leftArrowKey.isPressed)
             {
                 horizontalInput -= 1f;
-            }
-            
-            if (playerAnimationController != null)
-            {
-                playerAnimationController.SetRunning(horizontalInput != 0f);
             }
 
             // Flip object (dan child-childnya) sesuai arah gerak
@@ -122,14 +132,24 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // Hitung kecepatan berdasarkan berat inventaris
+        if (playerAnimationController != null)
+        {
+            playerAnimationController.SetRunning(horizontalInput != 0f);
+        }
+
+        // Hitung kecepatan dan loncatan berdasarkan berat inventaris
         float currentMoveSpeed = moveSpeed;
+        float currentJumpForce = jumpForce;
         if (GameplayManager.Instance != null)
         {
             float weightRatio = GameplayManager.Instance.totalWeight / GameplayManager.Instance.maxWeight;
             weightRatio = Mathf.Clamp01(weightRatio); // Pastikan nilainya antara 0 dan 1
+            
             float minSpeed = moveSpeed * 0.2f; // Kecepatan minimal 20% dari kecepatan asli saat beban penuh
             currentMoveSpeed = Mathf.Lerp(moveSpeed, minSpeed, weightRatio);
+
+            float minJumpForce = jumpForce * 0.5f; // Kekuatan loncat minimal 50% saat beban penuh
+            currentJumpForce = Mathf.Lerp(jumpForce, minJumpForce, weightRatio);
         }
 
         // Terapkan kecepatan horizontal dengan efek smoothing (halus)
@@ -171,12 +191,12 @@ public class PlayerController : MonoBehaviour
         {
             if (isGrounded)
             {
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, currentJumpForce);
                 if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX("jump");
             }
             else if (canDoubleJump)
             {
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, currentJumpForce);
                 canDoubleJump = false;
                 if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX("jump");
             }

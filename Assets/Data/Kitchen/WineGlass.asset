@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f836b588c80ba5468044a2a214d84f9, type: 3}
-  m_Name: Piring
+  m_Name: WineGlass
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemName: Piring
+  itemName: Wine Glass
   width: 2
-  height: 2
-  value: 80
-  weight: 0.5
-  itemIcon: {fileID: 3237363261134259534, guid: 216b720e8409315428b0ec48d58fb447, type: 3}
+  height: 1
+  value: 120
+  weight: 0.6
+  itemIcon: {fileID: -3914427088199776667, guid: 269f40a2a29690c42b2cc19a9585fd5a, type: 3}

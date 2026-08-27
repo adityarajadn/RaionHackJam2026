@@ -33,13 +33,12 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        // Jika belum ada AudioSource, tambahkan secara otomatis
         if (musicSource == null)
         {
             musicSource = gameObject.AddComponent<AudioSource>();
-            musicSource.loop = true; // Music defaultnya ngeloop
-            musicSource.playOnAwake = false;
         }
+        musicSource.loop = true; // Music selalu diloop
+        musicSource.playOnAwake = false;
 
         if (sfxSource == null)
         {

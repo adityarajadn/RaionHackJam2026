@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f836b588c80ba5468044a2a214d84f9, type: 3}
-  m_Name: FridgeItem
+  m_Name: Plate
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemName: Fridge
+  itemName: Plate
   width: 2
-  height: 1
-  value: 200
-  weight: 20
-  itemIcon: {fileID: -8543947805752190069, guid: 074df45024661c346b2c0d4a71794e91, type: 3}
+  height: 2
+  value: 80
+  weight: 1
+  itemIcon: {fileID: 3237363261134259534, guid: 216b720e8409315428b0ec48d58fb447, type: 3}

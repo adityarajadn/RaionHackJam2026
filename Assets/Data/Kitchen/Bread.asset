@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f836b588c80ba5468044a2a214d84f9, type: 3}
-  m_Name: Vas
+  m_Name: Bread
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemName: Vas
+  itemName: Bread
   width: 2
-  height: 3
-  value: 600
-  weight: 1.5
-  itemIcon: {fileID: -7573354855677281409, guid: 67a372888b6fc464ebe66e546161fd98, type: 3}
+  height: 1
+  value: 40
+  weight: 0.8
+  itemIcon: {fileID: 5249169164314093808, guid: 22f8b25e314c36c4abb2d4978739a8d1, type: 3}
