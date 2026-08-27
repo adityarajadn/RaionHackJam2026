@@ -16,4 +16,5 @@ MonoBehaviour:
   width: 2
   height: 3
   value: 350
+  weight: 1.5
   itemIcon: {fileID: 4273391446480995714, guid: 89536f6519fafd94d8ae2fa262b96e4e, type: 3}

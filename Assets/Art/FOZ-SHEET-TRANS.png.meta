@@ -1,0 +1,455 @@
+fileFormatVersion: 2
+guid: eb9278a9cc715964f92a0a62bb225953
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4971346559475167185
+    second: FOZ-SHEET-TRANS_0
+  - first:
+      213: 732056336469264684
+    second: FOZ-SHEET-TRANS_1
+  - first:
+      213: 1868193207751791156
+    second: FOZ-SHEET-TRANS_2
+  - first:
+      213: 608284069483745646
+    second: FOZ-SHEET-TRANS_3
+  - first:
+      213: -5717304371375030706
+    second: FOZ-SHEET-TRANS_4
+  - first:
+      213: -131517974718273091
+    second: FOZ-SHEET-TRANS_5
+  - first:
+      213: -3250448566269846227
+    second: FOZ-SHEET-TRANS_6
+  - first:
+      213: 7430462951158652683
+    second: FOZ-SHEET-TRANS_7
+  - first:
+      213: -1157573051064108329
+    second: FOZ-SHEET-TRANS_8
+  - first:
+      213: -6410046697549080864
+    second: FOZ-SHEET-TRANS_9
+  - first:
+      213: 8467520272453025077
+    second: FOZ-SHEET-TRANS_10
+  - first:
+      213: 2764927704030579124
+    second: FOZ-SHEET-TRANS_11
+  - first:
+      213: 6808856870758602457
+    second: FOZ-SHEET-TRANS_12
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: FOZ-SHEET-TRANS_0
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 956
+        width: 506
+        height: 425
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f205f1bb4aa320bb0800000000000000
+      internalID: -4971346559475167185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FOZ-SHEET-TRANS_1
+      rect:
+        serializedVersion: 2
+        x: 463
+        y: 735
+        width: 110
+        height: 132
+      alignment: 9
+      pivot: {x: 0.6078852, y: 0.110417224}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2903d20c59c82a00800000000000000
+      internalID: 732056336469264684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FOZ-SHEET-TRANS_2
+      rect:
+        serializedVersion: 2
+        x: 604
+        y: 767
+        width: 87
+        height: 105
+      alignment: 9
+      pivot: {x: 0.22718829, y: 0.13581891}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 432d7d703d72de910800000000000000
+      internalID: 1868193207751791156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FOZ-SHEET-TRANS_3
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 598
+        width: 105
+        height: 131
+      alignment: 9
+      pivot: {x: 0.90185577, y: 0.08731242}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e619b1c632f017800800000000000000
+      internalID: 608284069483745646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FOZ-SHEET-TRANS_4
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 598
+        width: 49
+        height: 62
+      alignment: 9
+      pivot: {x: 1.0651108, y: 0.43619856}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4e376f37fd08a0b0800000000000000
+      internalID: -5717304371375030706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FOZ-SHEET-TRANS_5
+      rect:
+        serializedVersion: 2
+        x: 479
+        y: 580
+        width: 304
+        height: 143
+      alignment: 9
+      pivot: {x: 0.2701143, y: 0.038955368}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db9a65b4911cc2ef0800000000000000
+      internalID: -131517974718273091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FOZ-SHEET-TRANS_6
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 460
+        width: 159
+        height: 97
+      alignment: 9
+      pivot: {x: 0.86489266, y: 0.4184391}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2ddec6204614e2d0800000000000000
+      internalID: -3250448566269846227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FOZ-SHEET-TRANS_7
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 412
+        width: 98
+        height: 100
+      alignment: 9
+      pivot: {x: 0.836375, y: 0.80327576}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0f13809fae4e1760800000000000000
+      internalID: 7430462951158652683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FOZ-SHEET-TRANS_8
+      rect:
+        serializedVersion: 2
+        x: 489
+        y: 345
+        width: 201
+        height: 195
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7da32c171797fefe0800000000000000
+      internalID: -1157573051064108329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FOZ-SHEET-TRANS_9
+      rect:
+        serializedVersion: 2
+        x: 736
+        y: 413
+        width: 113
+        height: 101
+      alignment: 9
+      pivot: {x: 0.1499326, y: 0.85249406}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e6dbee8d70fa07a0800000000000000
+      internalID: -6410046697549080864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FOZ-SHEET-TRANS_10
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 187
+        width: 266
+        height: 182
+      alignment: 9
+      pivot: {x: 0.9213537, y: 0.24642542}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53d3bff23dca28570800000000000000
+      internalID: 8467520272453025077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FOZ-SHEET-TRANS_11
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 184
+        width: 68
+        height: 95
+      alignment: 9
+      pivot: {x: 0.5969557, y: 0.95803607}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b9016cf81ffe5620800000000000000
+      internalID: 2764927704030579124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FOZ-SHEET-TRANS_12
+      rect:
+        serializedVersion: 2
+        x: 649
+        y: 201
+        width: 69
+        height: 98
+      alignment: 9
+      pivot: {x: 0.23245992, y: 0.94401455}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d65b04cf3bed7e50800000000000000
+      internalID: 6808856870758602457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: cd75871772c782f469cade64a7ab588b
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      FOZ-SHEET-TRANS_0: -4971346559475167185
+      FOZ-SHEET-TRANS_1: 732056336469264684
+      FOZ-SHEET-TRANS_10: 8467520272453025077
+      FOZ-SHEET-TRANS_11: 2764927704030579124
+      FOZ-SHEET-TRANS_12: 6808856870758602457
+      FOZ-SHEET-TRANS_2: 1868193207751791156
+      FOZ-SHEET-TRANS_3: 608284069483745646
+      FOZ-SHEET-TRANS_4: -5717304371375030706
+      FOZ-SHEET-TRANS_5: -131517974718273091
+      FOZ-SHEET-TRANS_6: -3250448566269846227
+      FOZ-SHEET-TRANS_7: 7430462951158652683
+      FOZ-SHEET-TRANS_8: -1157573051064108329
+      FOZ-SHEET-TRANS_9: -6410046697549080864
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f836b588c80ba5468044a2a214d84f9, type: 3}
+  m_Name: Wajan
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemName: Wajan
+  width: 3
+  height: 2
+  value: 300
+  weight: 1.5
+  itemIcon: {fileID: -1052294293756212139, guid: 5accb6255cf28524ebbb1e2cc7dd7087, type: 3}

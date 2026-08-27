@@ -9,6 +9,8 @@ public class PlayerAnimationController : MonoBehaviour
     // Menggunakan StringToHash untuk performa yang lebih baik
     private readonly int isRunningHash = Animator.StringToHash("isRunning");
     private readonly int isInteractingHash = Animator.StringToHash("isInteracting");
+    private readonly int isGroundedHash = Animator.StringToHash("isGrounded");
+    private readonly int yVelocityHash = Animator.StringToHash("yVelocity");
 
     private void Awake()
     {
@@ -23,6 +25,22 @@ public class PlayerAnimationController : MonoBehaviour
         if (animator != null)
         {
             animator.SetBool(isRunningHash, isRunning);
+        }
+    }
+
+    public void SetGrounded(bool isGrounded)
+    {
+        if (animator != null)
+        {
+            animator.SetBool(isGroundedHash, isGrounded);
+        }
+    }
+
+    public void SetYVelocity(float yVelocity)
+    {
+        if (animator != null)
+        {
+            animator.SetFloat(yVelocityHash, yVelocity);
         }
     }
 

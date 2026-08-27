@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float fallMultiplier = 2.5f; // Semakin besar semakin cepat jatuh
     [SerializeField] private float lowJumpMultiplier = 2f; // Semakin besar semakin cepat turun jika tombol dilepas
     [Range(0, .3f)] [SerializeField] private float movementSmoothing = .05f;
+    [SerializeField] private GameObject shadowObject;
     private Vector2 velocity = Vector2.zero;
     private bool canDoubleJump = false;
     private Rigidbody2D rb;
@@ -18,6 +19,8 @@ public class PlayerController : MonoBehaviour
     private System.Collections.Generic.List<Interactable> nearbyInteractables = new System.Collections.Generic.List<Interactable>();
 
     private PlayerAnimationController playerAnimationController;
+    private float stepTimer = 0f;
+    private float stepInterval = 0.35f;
 
     void Start()
     {
@@ -25,6 +28,13 @@ public class PlayerController : MonoBehaviour
         playerAnimationController = GetComponent<PlayerAnimationController>();
         // Freeze rotation so the player doesn't tip over when moving
         rb.freezeRotation = true;
+
+        if (shadowObject == null)
+        {
+            Transform shadow = transform.Find("shadow");
+            if (shadow == null) shadow = transform.Find("Shadow");
+            if (shadow != null) shadowObject = shadow.gameObject;
+        }
     }
 
     void Update()
@@ -112,16 +122,49 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        // Hitung kecepatan berdasarkan berat inventaris
+        float currentMoveSpeed = moveSpeed;
+        if (GameplayManager.Instance != null)
+        {
+            float weightRatio = GameplayManager.Instance.totalWeight / GameplayManager.Instance.maxWeight;
+            weightRatio = Mathf.Clamp01(weightRatio); // Pastikan nilainya antara 0 dan 1
+            float minSpeed = moveSpeed * 0.2f; // Kecepatan minimal 20% dari kecepatan asli saat beban penuh
+            currentMoveSpeed = Mathf.Lerp(moveSpeed, minSpeed, weightRatio);
+        }
+
         // Terapkan kecepatan horizontal dengan efek smoothing (halus)
-        Vector2 targetVelocity = new Vector2(horizontalInput * moveSpeed, rb.linearVelocity.y);
+        Vector2 targetVelocity = new Vector2(horizontalInput * currentMoveSpeed, rb.linearVelocity.y);
         rb.linearVelocity = Vector2.SmoothDamp(rb.linearVelocity, targetVelocity, ref velocity, movementSmoothing);
 
         // Loncat dan Double Jump
         bool isGrounded = Mathf.Abs(rb.linearVelocity.y) < 0.01f;
 
+        if (shadowObject != null)
+        {
+            if (shadowObject.activeSelf != isGrounded)
+            {
+                shadowObject.SetActive(isGrounded);
+            }
+        }
+
         if (isGrounded)
         {
             canDoubleJump = true;
+
+            // Logika footstep
+            if (Mathf.Abs(horizontalInput) > 0.1f)
+            {
+                stepTimer -= Time.deltaTime;
+                if (stepTimer <= 0f)
+                {
+                    if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX("step");
+                    stepTimer = stepInterval;
+                }
+            }
+            else
+            {
+                stepTimer = 0f;
+            }
         }
 
         if (jumpPressed)
@@ -129,11 +172,13 @@ public class PlayerController : MonoBehaviour
             if (isGrounded)
             {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+                if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX("jump");
             }
             else if (canDoubleJump)
             {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
                 canDoubleJump = false;
+                if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX("jump");
             }
         }
 
@@ -146,6 +191,12 @@ public class PlayerController : MonoBehaviour
         {
             // Tombol dilepas sebelum mencapai titik tertinggi -> potong loncatan
             rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
+        }
+
+        if (playerAnimationController != null)
+        {
+            playerAnimationController.SetGrounded(isGrounded);
+            playerAnimationController.SetYVelocity(rb.linearVelocity.y);
         }
     }
 

@@ -97,6 +97,8 @@ public class InventoryController : MonoBehaviour
                 selectedItemRect.SetParent(transform, true); // Pindah parent ke Canvas
                 selectedItemRect.localScale = Vector3.one;
                 selectedItemRect.SetAsLastSibling(); // Agar berada di paling atas
+                
+                if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX("drag&drop");
             }
         }
         else
@@ -125,6 +127,8 @@ public class InventoryController : MonoBehaviour
                         selectedItemRect.SetParent(transform, true);
                         selectedItemRect.localScale = Vector3.one;
                         selectedItemRect.SetAsLastSibling();
+                        
+                        if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX("drag&drop");
                         break;
                     }
                 }
@@ -174,6 +178,8 @@ public class InventoryController : MonoBehaviour
                 
                 selectedItem = null;
                 highlightRect.gameObject.SetActive(false);
+                
+                if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX("drag&drop");
             }
             else
             {
@@ -205,6 +211,13 @@ public class InventoryController : MonoBehaviour
                 GameObject rootObj = selectedItem.linkedWorldItem.GetRootObject();
                 rootObj.transform.position = worldPos;
                 selectedItem.linkedWorldItem.ShowWorldItem();
+
+                // Tambahkan Rigidbody2D otomatis jika belum ada
+                Rigidbody2D rb = rootObj.GetComponent<Rigidbody2D>();
+                if (rb == null)
+                {
+                    rb = rootObj.AddComponent<Rigidbody2D>();
+                }
             }
         }
         else
@@ -248,6 +261,7 @@ public class InventoryController : MonoBehaviour
         IsInventoryOpen = true;
         if (inventoryUI != null) inventoryUI.SetActive(true);
         Time.timeScale = 0f; // Freeze gameplay
+        if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX("open&close inventory");
     }
 
     public void HideInventory()
@@ -259,6 +273,7 @@ public class InventoryController : MonoBehaviour
         if (highlightRect != null) highlightRect.gameObject.SetActive(false);
 
         Time.timeScale = 1f; // Resume gameplay
+        if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX("open&close inventory");
         
         // Kembalikan item di staging area ke dunia
         if (stagingArea != null)

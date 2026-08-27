@@ -22,6 +22,8 @@ public class InventoryGrid : MonoBehaviour
 
     [Header("UI")]
     public UnityEngine.UI.Text totalValueText;
+    public UnityEngine.UI.Slider weightSlider;
+    public UnityEngine.UI.Text weightText;
 
     private void Awake()
     {
@@ -274,9 +276,8 @@ public class InventoryGrid : MonoBehaviour
 
     public void UpdateTotalValue()
     {
-        if (totalValueText == null) return;
-
         int total = 0;
+        float totalW = 0f;
         System.Collections.Generic.HashSet<InventoryItem> countedItems = new System.Collections.Generic.HashSet<InventoryItem>();
 
         for (int x = 0; x < gridWidth; x++)
@@ -287,6 +288,7 @@ public class InventoryGrid : MonoBehaviour
                 if (item != null && item.itemData != null && !countedItems.Contains(item))
                 {
                     total += item.itemData.value;
+                    totalW += item.itemData.weight;
                     countedItems.Add(item);
                 }
             }
@@ -295,8 +297,23 @@ public class InventoryGrid : MonoBehaviour
         if (GameplayManager.Instance != null)
         {
             GameplayManager.Instance.totalScore = total;
+            GameplayManager.Instance.totalWeight = totalW;
         }
 
-        totalValueText.text = "Total Value: " + total.ToString();
+        if (totalValueText != null)
+        {
+            totalValueText.text = "Total Value: " + total.ToString();
+        }
+
+        if (weightSlider != null && GameplayManager.Instance != null)
+        {
+            weightSlider.maxValue = GameplayManager.Instance.maxWeight;
+            weightSlider.value = totalW;
+        }
+
+        if (weightText != null)
+        {
+            weightText.text = "Weight: " + totalW.ToString("F1") + " kg";
+        }
     }
 }

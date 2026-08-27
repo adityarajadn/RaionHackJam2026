@@ -8,6 +8,8 @@ public class GameplayManager : MonoBehaviour
 
     [Header("Game State")]
     public int totalScore = 0;
+    public float totalWeight = 0f;
+    public float maxWeight = 100f; // Kapasitas maksimum berat sebelum pergerakan sangat lambat
     public bool isGameOver = false;
 
     [Header("End Game UI")]
@@ -15,6 +17,8 @@ public class GameplayManager : MonoBehaviour
     public GameObject endGamePanel;
     [Tooltip("Teks untuk menampilkan skor akhir di panel")]
     public TextMeshProUGUI finalScoreText;
+    [Tooltip("Teks untuk menampilkan total berat akhir di panel")]
+    public TextMeshProUGUI finalWeightText;
 
     private void Awake()
     {
@@ -36,6 +40,11 @@ public class GameplayManager : MonoBehaviour
         {
             endGamePanel.SetActive(false);
         }
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayMusic("Ingame");
+        }
     }
 
     // Fungsi untuk menambah skor (misalnya saat player mengambil barang berharga)
@@ -54,6 +63,11 @@ public class GameplayManager : MonoBehaviour
     {
         if (isGameOver) return;
         isGameOver = true;
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX("result");
+        }
 
         Debug.Log("Waktu habis! Game Over.");
 
@@ -77,19 +91,27 @@ public class GameplayManager : MonoBehaviour
 
         if (finalScoreText != null)
         {
-            finalScoreText.text = "Total Value: " + totalScore.ToString() + "\nHighest Value: " + highestScore.ToString();
+            finalScoreText.text = "Total Value: " + totalScore.ToString() + 
+                                  "\nHighest Value: " + highestScore.ToString();
+        }
+
+        if (finalWeightText != null)
+        {
+            finalWeightText.text = "Total Weight: " + totalWeight.ToString("F1") + " kg";
         }
     }
 
     // Fungsi tambahan untuk tombol di UI (misalnya tombol Restart atau Main Menu)
     public void RestartLevel()
     {
+        if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX("clickButton");
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void ReturnToMainMenu(string mainMenuSceneName = "MainMenu")
     {
+        if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX("clickButton");
         Time.timeScale = 1f;
         SceneManager.LoadScene(mainMenuSceneName);
     }

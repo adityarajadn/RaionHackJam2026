@@ -7,5 +7,6 @@ public class ItemData : ScriptableObject
     public int width = 1;
     public int height = 1;
     public int value = 0; // Nilai item
+    public float weight = 1f; // Berat item dalam kg
     public Sprite itemIcon;
 }
