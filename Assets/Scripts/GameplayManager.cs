@@ -91,8 +91,7 @@ public class GameplayManager : MonoBehaviour
 
         if (finalScoreText != null)
         {
-            finalScoreText.text = "Total Value: " + totalScore.ToString() + 
-                                  "\nHighest Value: " + highestScore.ToString();
+            finalScoreText.text = "Total Value: " + totalScore.ToString();
         }
 
         if (finalWeightText != null)
@@ -106,13 +105,13 @@ public class GameplayManager : MonoBehaviour
     {
         if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX("clickButton");
         Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        GameSceneManager.Instance.ReloadScene();
     }
 
     public void ReturnToMainMenu(string mainMenuSceneName = "MainMenu")
     {
         if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX("clickButton");
         Time.timeScale = 1f;
-        SceneManager.LoadScene(mainMenuSceneName);
+        GameSceneManager.Instance.LoadScene(mainMenuSceneName);
     }
 }

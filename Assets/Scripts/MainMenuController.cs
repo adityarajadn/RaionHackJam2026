@@ -13,25 +13,23 @@ public class MainMenuController : MonoBehaviour
     public void PlayGame()
     {
         if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX("clickButton");
-        // Pindah ke scene TestScene
-        SceneManager.LoadScene("HowToPlay");
+        GameSceneManager.Instance.LoadScene("HowToPlay");
     }
 
     public void OpenCredits()
     {
         if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX("clickButton");
-        SceneManager.LoadScene("Credit");
+        GameSceneManager.Instance.LoadScene("Credit");
     }
 
     public void OpenSettings() {
         if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX("clickButton");
-        SceneManager.LoadScene("Settings");
+        GameSceneManager.Instance.LoadScene("Settings");
     }
 
     public void ExitGame()
     {
         if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX("clickButton");
-        Debug.Log("Keluar dari Game!");
         Application.Quit();
     }
 }

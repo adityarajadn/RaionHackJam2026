@@ -5,6 +5,6 @@ public class CreditController : MonoBehaviour
 {
     public void BackToMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        GameSceneManager.Instance.LoadScene("MainMenu");
     }
 }

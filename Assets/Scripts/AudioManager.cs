@@ -58,6 +58,16 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
+        // Cegah lagu mengulang dari awal jika lagu yang sama sedang dimainkan
+        if (musicSource.clip == s.clip)
+        {
+            if (!musicSource.isPlaying)
+            {
+                musicSource.Play();
+            }
+            return;
+        }
+
         musicSource.clip = s.clip;
         musicSource.Play();
     }

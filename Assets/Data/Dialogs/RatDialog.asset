@@ -14,5 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogData
   sentences:
   - Squeak!*
-  - What are u doin here?
+  - Hey!
+  - Do you know you can interact somethings by pressing "E" on your keyboard.
+  - Your goal is to bring me your bag with the highest value you can achieve!
+  - But, remember, bringin too much weight will makes you move slower.
+  - What are you waiting!
   - Pack your bag and start stealing!

@@ -43,6 +43,6 @@ public class SettingsSceneController : MonoBehaviour
 
     public void BackToMainMenu()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+        GameSceneManager.Instance.LoadScene("MainMenu");
     }
 }

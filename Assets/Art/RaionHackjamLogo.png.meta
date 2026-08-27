@@ -1,0 +1,403 @@
+fileFormatVersion: 2
+guid: 58599ed25083e304eabcbad32bbfd0b9
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2196266603935626473
+    second: RaionHackjamLogo_0
+  - first:
+      213: 7109391310796833030
+    second: RaionHackjamLogo_1
+  - first:
+      213: -5062400249548199391
+    second: RaionHackjamLogo_2
+  - first:
+      213: -1958769446646834873
+    second: RaionHackjamLogo_3
+  - first:
+      213: -1883160604100437118
+    second: RaionHackjamLogo_4
+  - first:
+      213: 3863106437868186418
+    second: RaionHackjamLogo_5
+  - first:
+      213: 4769320929657038251
+    second: RaionHackjamLogo_6
+  - first:
+      213: 3974947181450872244
+    second: RaionHackjamLogo_7
+  - first:
+      213: 5022323196835452837
+    second: RaionHackjamLogo_8
+  - first:
+      213: -4647593413283790195
+    second: RaionHackjamLogo_9
+  - first:
+      213: 3443699152366402136
+    second: RaionHackjamLogo_10
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: RaionHackjamLogo_0
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 98
+        width: 45
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71b0d58f82b4581e0800000000000000
+      internalID: -2196266603935626473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RaionHackjamLogo_1
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 98
+        width: 47
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6014b41eab1a9a260800000000000000
+      internalID: 7109391310796833030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RaionHackjamLogo_2
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 99
+        width: 19
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12aa4d67bcdbeb9b0800000000000000
+      internalID: -5062400249548199391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RaionHackjamLogo_3
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 99
+        width: 45
+        height: 103
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7491ab7f09d01d4e0800000000000000
+      internalID: -1958769446646834873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RaionHackjamLogo_4
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 41
+        width: 127
+        height: 184
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28b5591786badd5e0800000000000000
+      internalID: -1883160604100437118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RaionHackjamLogo_5
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 0
+        width: 34
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23b68ae66d28c9530800000000000000
+      internalID: 3863106437868186418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RaionHackjamLogo_6
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 6
+        width: 35
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba52b08dd18003240800000000000000
+      internalID: 4769320929657038251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RaionHackjamLogo_7
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 15
+        width: 33
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b5c15fb669d92730800000000000000
+      internalID: 3974947181450872244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RaionHackjamLogo_8
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 20
+        width: 34
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a7d49e8650e2b540800000000000000
+      internalID: 5022323196835452837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RaionHackjamLogo_9
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 28
+        width: 35
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8246c42a6e608fb0800000000000000
+      internalID: -4647593413283790195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RaionHackjamLogo_10
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 34
+        width: 35
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85afc12322a7acf20800000000000000
+      internalID: 3443699152366402136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      RaionHackjamLogo_0: -2196266603935626473
+      RaionHackjamLogo_1: 7109391310796833030
+      RaionHackjamLogo_10: 3443699152366402136
+      RaionHackjamLogo_2: -5062400249548199391
+      RaionHackjamLogo_3: -1958769446646834873
+      RaionHackjamLogo_4: -1883160604100437118
+      RaionHackjamLogo_5: 3863106437868186418
+      RaionHackjamLogo_6: 4769320929657038251
+      RaionHackjamLogo_7: 3974947181450872244
+      RaionHackjamLogo_8: 5022323196835452837
+      RaionHackjamLogo_9: -4647593413283790195
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
