@@ -1,59 +1,56 @@
 using UnityEngine;
-
+using UnityEngine.Serialization;
 public class OpenableObject : Interactable
 {
     [Header("Sprites")]
     [Tooltip("GameObject atau SpriteRenderer untuk state tertutup")]
-    public GameObject closedSprite;
+    [FormerlySerializedAs("closedSprite")]
+    [SerializeField] private GameObject _closedSprite;
     [Tooltip("GameObject atau SpriteRenderer untuk state terbuka")]
-    public GameObject openSprite;
-
-    public GameObject itemInside;
-
-    private bool isOpen = false;
-
+    [FormerlySerializedAs("openSprite")]
+    [SerializeField] private GameObject _openSprite;
+    [FormerlySerializedAs("itemInside")]
+    [SerializeField] private GameObject _itemInside;
+    private bool _isOpen = false;
     protected override void Awake()
     {
         base.Awake();
-        // Pastikan sprite yang aktif sesuai state awal
         UpdateSpriteState();
-        hideItemInside();
+        HideItemInside();
     }
-
     public override void Interact()
     {
-        isOpen = !isOpen;
+        _isOpen = !_isOpen;
         UpdateSpriteState();
-        showItemInside();
-        
+        ShowItemInside();
         if (AudioManager.Instance != null)
         {
             AudioManager.Instance.PlaySFX("door");
         }
     }
-
     private void UpdateSpriteState()
     {
-        if (closedSprite != null)
+        if (_closedSprite != null)
         {
-            closedSprite.SetActive(!isOpen);
+            _closedSprite.SetActive(!_isOpen);
         }
-        
-        if (openSprite != null)
+        if (_openSprite != null)
         {
-            openSprite.SetActive(isOpen);
+            _openSprite.SetActive(_isOpen);
         }
     }
-
-    public void hideItemInside() {
-        if(itemInside != null) {
-            itemInside.SetActive(false);
+    public void HideItemInside() 
+    {
+        if (_itemInside != null) 
+        {
+            _itemInside.SetActive(false);
         }
     }
-
-    public void showItemInside() {
-        if(itemInside != null) {
-            itemInside.SetActive(true);
+    public void ShowItemInside() 
+    {
+        if (_itemInside != null) 
+        {
+            _itemInside.SetActive(true);
         }
     }
 }

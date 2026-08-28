@@ -1,27 +1,26 @@
 using System;
 using UnityEngine;
-
+using UnityEngine.Serialization;
 [System.Serializable]
 public class Sound
 {
     public string name;
     public AudioClip clip;
 }
-
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager Instance;
-
-    public Sound[] musicSounds;
-    public Sound[] sfxSounds;
-
+    public static AudioManager Instance { get; private set; }
+    [FormerlySerializedAs("musicSounds")]
+    [SerializeField] private Sound[] _musicSounds;
+    [FormerlySerializedAs("sfxSounds")]
+    [SerializeField] private Sound[] _sfxSounds;
     [Header("Audio Sources")]
-    public AudioSource musicSource;
-    public AudioSource sfxSource;
-
+    [FormerlySerializedAs("musicSource")]
+    [SerializeField] private AudioSource _musicSource;
+    [FormerlySerializedAs("sfxSource")]
+    [SerializeField] private AudioSource _sfxSource;
     private void Awake()
     {
-        // Setup Singleton
         if (Instance == null)
         {
             Instance = this;
@@ -32,74 +31,60 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
-        if (musicSource == null)
+        if (_musicSource == null)
         {
-            musicSource = gameObject.AddComponent<AudioSource>();
+            _musicSource = gameObject.AddComponent<AudioSource>();
         }
-        musicSource.loop = true; // Music selalu diloop
-        musicSource.playOnAwake = false;
-
-        if (sfxSource == null)
+        _musicSource.loop = true; 
+        _musicSource.playOnAwake = false;
+        if (_sfxSource == null)
         {
-            sfxSource = gameObject.AddComponent<AudioSource>();
-            sfxSource.loop = false;
-            sfxSource.playOnAwake = false;
+            _sfxSource = gameObject.AddComponent<AudioSource>();
+            _sfxSource.loop = false;
+            _sfxSource.playOnAwake = false;
         }
     }
-
     public void PlayMusic(string name)
     {
-        Sound s = Array.Find(musicSounds, x => x.name == name);
-        if (s == null)
+        Sound soundToPlay = Array.Find(_musicSounds, sound => sound.name == name);
+        if (soundToPlay == null)
         {
-            Debug.LogWarning("Music: " + name + " tidak ditemukan!");
             return;
         }
-
-        // Cegah lagu mengulang dari awal jika lagu yang sama sedang dimainkan
-        if (musicSource.clip == s.clip)
+        if (_musicSource.clip == soundToPlay.clip)
         {
-            if (!musicSource.isPlaying)
+            if (!_musicSource.isPlaying)
             {
-                musicSource.Play();
+                _musicSource.Play();
             }
             return;
         }
-
-        musicSource.clip = s.clip;
-        musicSource.Play();
+        _musicSource.clip = soundToPlay.clip;
+        _musicSource.Play();
     }
-
     public void PlaySFX(string name)
     {
-        Sound s = Array.Find(sfxSounds, x => x.name == name);
-        if (s == null)
+        Sound soundToPlay = Array.Find(_sfxSounds, sound => sound.name == name);
+        if (soundToPlay == null)
         {
-            Debug.LogWarning("SFX: " + name + " tidak ditemukan!");
             return;
         }
-
-        sfxSource.PlayOneShot(s.clip);
+        _sfxSource.PlayOneShot(soundToPlay.clip);
     }
-
     public void SetMusicVolume(float volume)
     {
-        musicSource.volume = volume;
+        _musicSource.volume = volume;
     }
-
     public void SetSFXVolume(float volume)
     {
-        sfxSource.volume = volume;
+        _sfxSource.volume = volume;
     }
-
     public float GetMusicVolume()
     {
-        return musicSource.volume;
+        return _musicSource.volume;
     }
-
     public float GetSFXVolume()
     {
-        return sfxSource.volume;
+        return _sfxSource.volume;
     }
 }

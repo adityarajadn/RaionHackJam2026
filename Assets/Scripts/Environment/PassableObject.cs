@@ -1,19 +1,13 @@
 using UnityEngine;
-
 [RequireComponent(typeof(Collider2D))]
 public class PassableObject : MonoBehaviour
 {
     private Collider2D myCollider;
-
     private void Start()
     {
         myCollider = GetComponent<Collider2D>();
-
-        // Mencari semua objek yang saat ini memiliki tag "Entities" di scene
-        // dan mengabaikan collision dengan objek tersebut sejak awal.
         IgnoreExistingEntities();
     }
-
     private void IgnoreExistingEntities()
     {
         GameObject[] entities = GameObject.FindGameObjectsWithTag("Entities");
@@ -26,9 +20,6 @@ public class PassableObject : MonoBehaviour
             }
         }
     }
-
-    // Berjaga-jaga jika ada objek "Entities" baru yang di-spawn/dibuat saat game berjalan
-    // (misalnya musuh yang baru muncul).
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Entities") || collision.gameObject.CompareTag("Player"))

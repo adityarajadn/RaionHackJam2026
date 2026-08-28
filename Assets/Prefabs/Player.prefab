@@ -193,9 +193,12 @@ GameObject:
   - component: {fileID: 3080948443584666446}
   - component: {fileID: 5478770633743651056}
   - component: {fileID: 3572818572386811032}
-  - component: {fileID: 6201106959759846797}
   - component: {fileID: 6242400985090030767}
   - component: {fileID: 7887867111541100862}
+  - component: {fileID: -347159559246818854}
+  - component: {fileID: 356215924635740227}
+  - component: {fileID: -8185594862162578474}
+  - component: {fileID: 7148951767283365576}
   m_Layer: 0
   m_Name: Player
   m_TagString: Entities
@@ -285,24 +288,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &6201106959759846797
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1688433881451534982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2504694381bda640aa5deca747855ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  moveSpeed: 8
-  jumpForce: 15
-  fallMultiplier: 2.5
-  lowJumpMultiplier: 2
-  movementSmoothing: 0.05
-  shadowObject: {fileID: 0}
 --- !u!95 &6242400985090030767
 Animator:
   serializedVersion: 7
@@ -337,6 +322,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b06356f0a2c43db41a15ce46a45293c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimationController
+--- !u!114 &-347159559246818854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1688433881451534982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a10e012768db14ba1b623ad0e3c5a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInput
+--- !u!114 &356215924635740227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1688433881451534982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80898853057dcb04483679cbafc4833e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
+  moveSpeed: 8
+  jumpForce: 15
+  fallMultiplier: 2.5
+  lowJumpMultiplier: 2
+  movementSmoothing: 0.05
+  shadowObject: {fileID: 0}
+--- !u!114 &-8185594862162578474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1688433881451534982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2f69f39ee046304197b635846aba9ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInteractor
+--- !u!114 &7148951767283365576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1688433881451534982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db55c94bfcaee784c9500444de857a5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAudio
 --- !u!1 &3014292492748328813
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,25 +2,26 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using UnityEngine.Serialization;
 public class DialogManager : MonoBehaviour
 {
     public static DialogManager Instance { get; private set; }
-
     [Header("UI Elements")]
-    public GameObject dialogPanel;
-    public TextMeshProUGUI dialogText;
-
+    [FormerlySerializedAs("dialogPanel")]
+    [SerializeField] private GameObject _dialogPanel;
+    [FormerlySerializedAs("dialogText")]
+    [SerializeField] private TextMeshProUGUI _dialogText;
     [Header("Settings")]
-    public float typingSpeed = 0.05f;
-    public float autoContinueDelay = 0.8f;
-
-    private DialogData currentDialog;
-    private int currentSentenceIndex = 0;
-    private bool isTyping = false;
-    private Coroutine typingCoroutine;
-    private Coroutine autoContinueCoroutine;
-
+    [FormerlySerializedAs("typingSpeed")]
+    [SerializeField] private float _typingSpeed = 0.05f;
+    [FormerlySerializedAs("autoContinueDelay")]
+    [SerializeField] private float _autoContinueDelay = 0.8f;
+    private DialogData _currentDialog;
+    private int _currentSentenceIndex = 0;
+    private bool _isTyping = false;
+    private Coroutine _typingCoroutine;
+    private Coroutine _autoContinueCoroutine;
+    public bool IsDialogActive => _dialogPanel != null && _dialogPanel.activeSelf;
     private void Awake()
     {
         if (Instance == null)
@@ -32,98 +33,84 @@ public class DialogManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
     private void Start()
     {
-        dialogPanel.SetActive(false);
+        _dialogPanel.SetActive(false);
     }
-
     private void Update()
     {
-        // Pakai New Input System (cek spasi)
-        if (dialogPanel.activeSelf && Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame)
+        if (_dialogPanel.activeSelf && Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             DisplayNextSentence();
         }
     }
-
     public void StartDialog(DialogData dialogData)
     {
-        currentDialog = dialogData;
-        currentSentenceIndex = 0;
-        dialogPanel.SetActive(true);
+        _currentDialog = dialogData;
+        _currentSentenceIndex = 0;
+        Time.timeScale = 0f; 
+        _dialogPanel.SetActive(true);
         DisplayNextSentence();
     }
-
     public void DisplayNextSentence()
     {
-        // Hentikan coroutine auto-continue jika ada
-        if (autoContinueCoroutine != null)
+        if (_autoContinueCoroutine != null)
         {
-            StopCoroutine(autoContinueCoroutine);
-            autoContinueCoroutine = null;
+            StopCoroutine(_autoContinueCoroutine);
+            _autoContinueCoroutine = null;
         }
-
-        if (isTyping)
+        if (_isTyping)
         {
-            // Skip typing and show full sentence
             CompleteTyping();
             return;
         }
-
-        if (currentSentenceIndex < currentDialog.sentences.Length)
+        if (_currentSentenceIndex < _currentDialog.sentences.Length)
         {
-            if (typingCoroutine != null)
+            if (_typingCoroutine != null)
             {
-                StopCoroutine(typingCoroutine);
+                StopCoroutine(_typingCoroutine);
             }
-            typingCoroutine = StartCoroutine(TypeSentence(currentDialog.sentences[currentSentenceIndex]));
-            currentSentenceIndex++;
+            _typingCoroutine = StartCoroutine(TypeSentence(_currentDialog.sentences[_currentSentenceIndex]));
+            _currentSentenceIndex++;
         }
         else
         {
             EndDialog();
         }
     }
-
     private IEnumerator TypeSentence(string sentence)
     {
-        dialogText.text = "";
-        isTyping = true;
+        _dialogText.text = "";
+        _isTyping = true;
         foreach (char letter in sentence.ToCharArray())
         {
-            dialogText.text += letter;
-            yield return new WaitForSeconds(typingSpeed);
+            _dialogText.text += letter;
+            yield return new WaitForSecondsRealtime(_typingSpeed);
         }
-        isTyping = false;
-
-        // Auto lanjut setelah sekian detik
-        autoContinueCoroutine = StartCoroutine(AutoContinueWait());
+        _isTyping = false;
+        _autoContinueCoroutine = StartCoroutine(AutoContinueWait());
     }
-
     private void CompleteTyping()
     {
-        if (typingCoroutine != null)
+        if (_typingCoroutine != null)
         {
-            StopCoroutine(typingCoroutine);
+            StopCoroutine(_typingCoroutine);
         }
-        // Tampilkan kalimat utuh
-        dialogText.text = currentDialog.sentences[currentSentenceIndex - 1];
-        isTyping = false;
-
-        // Jika diskip, tetap kasih delay sebelum kalimat selanjutnya
-        autoContinueCoroutine = StartCoroutine(AutoContinueWait());
+        _dialogText.text = _currentDialog.sentences[_currentSentenceIndex - 1];
+        _isTyping = false;
+        _autoContinueCoroutine = StartCoroutine(AutoContinueWait());
     }
-
     private IEnumerator AutoContinueWait()
     {
-        yield return new WaitForSeconds(autoContinueDelay);
+        yield return new WaitForSecondsRealtime(_autoContinueDelay);
         DisplayNextSentence();
     }
-
     private void EndDialog()
     {
-        dialogPanel.SetActive(false);
+        _dialogPanel.SetActive(false);
+        if (GameplayManager.Instance == null || !GameplayManager.Instance.IsGameOver)
+        {
+            Time.timeScale = 1f; 
+        }
     }
 }
-
